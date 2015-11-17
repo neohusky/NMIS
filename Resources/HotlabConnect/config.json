@@ -1,0 +1,25 @@
+{
+  "DoseCal": {
+    "Type": "Atomlab-100",
+    "CommPortName": "/dev/ttyUSB1",
+    "CommPortBaud": 4800,
+    "CommPortDataBits": 8,
+    "CommPortStopBits": 1,
+    "CommPortParity": "none"
+  },
+  "WellCounter": {
+    "CommPortName": "/dev/ttyUSB3",
+    "CommPortBaud": 9600,
+    "CommPortDataBits": 8,
+    "CommPortStopBits": 1,
+    "CommPortParity": "none",
+    "Enabled": false
+  },
+  "WebPort": 8080,
+  "Print": {
+    "Server": true,
+    "ServerFolder": "./print/",
+    "PrinterName": "Zebra",
+    "PrintPrinterName": "Zebra"
+  }
+}

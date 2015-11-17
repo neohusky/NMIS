@@ -1,0 +1,137 @@
+extends layout
+
+
+block pageTitle
+    .jumbotron
+        h1 Settings
+        h2 Hotlab Connect
+
+
+    form.form-horizontal(id='settings-form', method='post', action='/settingssave' novalidate)
+
+        .container-fluid
+            //form(id='settings-form', method='POST', action='/save' novalidate)
+            //form(id='settings-form', method='POST', action='/settingssave' novalidate)
+
+            .row
+                .col-md-6
+                    .jumbotron
+
+
+                        h2 Dose Calibrator Communications
+                        //hr
+                        //Dose Calibrator Options
+                        //form.form-horizontal(role='form')
+                        .form-group
+
+                            label(for='DoseCalCommPortName') Comm Port
+                            select.form-control(name='DoseCalCommPortName', id='DoseCalCommPortName')
+                                option(value="", disabled=true) -- Available Comm Ports --
+                                each CommPort in options.CommPorts
+                                    option(selected=options.DoseCalCommPortName == CommPort.value) #{CommPort.text}
+
+                                option(value="", disabled=true) -- Default Comm Ports --
+                                option(value="/dev/ttyUSB0") /dev/ttyUSB0
+                                option(value="/dev/ttyUSB1") /dev/ttyUSB1
+                                option(value="/dev/ttyUSB2") /dev/ttyUSB2
+                                option(value="/dev/ttyUSB3") /dev/ttyUSB3
+
+                            label(for='DoseCalCommPortBaud') Baud Rate
+                            select.form-control(name='DoseCalCommPortBaud', id='DoseCalCommPortBaud')
+                                each item in options.BaudRates
+                                    option(selected=options.DoseCalCommPortBaud == item.value) #{item.text}
+
+                            label(for='DoseCalCommPortDataBits') Data Bits
+                            select.form-control(name='DoseCalCommPortDataBits', id='DoseCalCommPortDataBits')
+                                each item in options.DataBits
+                                    option(selected=options.DoseCalCommPortDataBits == item.value) #{item.text}
+
+                            label(for='DoseCalCommPortStopBits') Stop Bits
+                            select.form-control(name='DoseCalCommPortStopBits', id='DoseCalCommPortStopBits')
+                                each item in options.StopBits
+                                    option(selected=options.DoseCalCommPortStopBits == item.value) #{item.text}
+
+                            label(for='DoseCalCommPortParity') Parity
+                            select.form-control(name='DoseCalCommPortParity', id='DoseCalCommPortParity')
+                                each item in options.Parity
+                                    option(selected=options.DoseCalCommPortParity == item.value) #{item.text}
+
+                            label(for='DoseCalType') Dose Calibrator Type
+                            select.form-control(name='DoseCalType', id='DoseCalType')
+                                each item in options.DoseCalTypes
+                                    option(selected=options.DoseCalType == item.value) #{item.text}
+
+                .col-md-6
+                    .jumbotron
+                        //Well Counter Options
+                        h2 Well Counter Communications
+                        .form-group
+                            label(for='WellCounterCommPortName') Comm Port
+                            select.form-control(name='WellCounterCommPortName', id='WellCounterCommPortName')
+                                option(value="", disabled=true) -- Available Comm Ports --
+                                each CommPort in options.CommPorts
+                                    option(selected=options.WellCounterCommPortName == CommPort.value) #{CommPort.text}
+
+                                option(value="", disabled=true) -- Default Comm Ports --
+                                option(value="/dev/ttyUSB0") /dev/ttyUSB0
+                                option(value="/dev/ttyUSB1") /dev/ttyUSB1
+                                option(value="/dev/ttyUSB2") /dev/ttyUSB2
+                                option(value="/dev/ttyUSB3") /dev/ttyUSB3
+
+                            label(for='WellCounterCommPortBaud') Baud Rate
+                            select.form-control(name='WellCounterCommPortBaud', id='WellCounterCommPortBaud')
+                                each item in options.BaudRates
+                                    option(selected=options.WellCounterCommPortBaud == item.value) #{item.text}
+
+                            label(for='WellCounterCommPortDataBits') Data Bits
+                            select.form-control(name='WellCounterCommPortDataBits', id='WellCounterCommPortDataBits')
+                                each item in options.DataBits
+                                    option(selected=options.WellCounterCommPortDataBits == item.value) #{item.text}
+
+                            label(for='WellCounterCommPortStopBits') Stop Bits
+                            select.form-control(name='WellCounterCommPortStopBits', id='WellCounterCommPortStopBits')
+                                each item in options.StopBits
+                                    option(selected=options.WellCounterCommPortStopBits == item.value) #{item.text}
+
+                            label(for='WellCounterCommPortParity') Parity
+                            select.form-control(name='WellCounterCommPortParity', id='WellCounterCommPortParity')
+                                each item in options.Parity
+                                    option(selected=options.WellCounterCommPortParity == item.value) #{item.text}
+
+                            label(for='WellCounterEnabled') Well Counter Enabled
+                            select.form-control(name='WellCounterEnabled', id='WellCounterEnabled')
+                                option(value="", disabled=true) -- Well Counter Enabled --
+                                each setting in options.WellCounterEnabled
+                                    option(setting.value, selected=setting.selected) #{setting.text}
+
+        .container-fluid
+            .jumbotron
+                h2 Web Access
+
+                .form-group
+                    label(for='WebPort') Web Port
+                    input(type='text', name='WebPort', class='form-control', value="#{options.WebPort}",
+                    id='WebPort', placeholder='Web Port')
+        .container-fluid
+            .jumbotron
+                h2 Print Server
+
+                .form-group
+                    label(for='PrintServer') Print Server Enabled
+                    select.form-control(name='PrintServer', id='PrintServer')
+                        option(value="", disabled=true) -- Print Server Enabled --
+                        each setting in options.PrintServer
+                            option(setting.value, selected=setting.selected) #{setting.text}
+
+                    label(for='PrintServerFolder') Print Server Folder
+                    input(type='text', name='PrintServerFolder', class='form-control', value="#{options.PrintServerFolder}",
+                    id='PrintServerFolder', placeholder='Print Server Folder')
+
+                    label(for='PrintPrinterName') Printer Nme
+                    input(type='text', name='PrintPrinterName', class='form-control', value="#{options.PrintPrinterName}",
+                    id='PrintPrinterName', placeholder='Printer Name')
+        .container-fluid
+            button.btn.btn-large.btn-primary.btn-block(type="submit") Save
+                i.fa.fa-save.fa-2x.pull-left
+
+

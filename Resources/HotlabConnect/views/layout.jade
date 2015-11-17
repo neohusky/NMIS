@@ -1,0 +1,59 @@
+//Layout.jade defines the layout of the entire website. It will contain the navbar and
+//extension views will populate pageTitle and pageContent blocks
+doctype html
+html
+  head
+    title= title
+    //indicate that our site is mobile optimized
+        // meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        // meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+    //reference our site-specific css
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    //add bootstrap dependencies from CDNjs. Using a CDN to distribute these files puts less pressure
+    //on our web server and will be delivered faster to the client than our own server.
+    script(src='/javascripts/jquery.min.js')
+    script(src='/bootstrap/js/bootstrap.min.js')
+    script(src='/javascripts/scripts.js')
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+    //link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='/font-awesome/css/font-awesome.min.css')
+    body
+        block navBar
+            nav(class='navbar navbar-inverse navbar-static-top', role='navigation')
+                .container-fluid
+                    .navbar-header
+
+                        a(class='navbar-brand', href='/#') Hotlab Connect
+                        ul(class='nav navbar-nav')
+                            li
+                                a(href='/status') Status
+                            li
+                                a(href='/settings') Settings
+                            li
+                                a(href='/printserver') Print Server
+                            li
+                                a(href='/admin') Admin
+                            li
+                                a(href='/about') About
+
+
+        //These are populated by extension views
+        block pageTitle
+        block pageContent
+
+    //Modal Dialog
+    #modalConfirmYesNo.modal.fade
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×
+                    h4#lblTitleConfirmYesNo.modal-title Confirmation
+                .modal-body
+                    p#lblMsgConfirmYesNo
+                .modal-footer
+                    button#btnYesConfirmYesNo.btn.btn-primary(type='button') Yes
+                    button#btnNoConfirmYesNo.btn.btn-default(type='button') No
+

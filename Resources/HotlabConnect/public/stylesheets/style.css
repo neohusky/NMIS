@@ -1,0 +1,22 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.btn-space
+{
+  margin-right: 20px;
+}
+
+.btn-lg
+{
+  font-size: 30px;
+  font-family: helvetica;
+  font-weight: bold;
+  letter-spacing: 0px;
+}
+

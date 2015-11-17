@@ -1,0 +1,31 @@
+extends layout
+block pageTitle
+    .jumbotron
+        h1 Status
+        h2 Some basic functions to test Hotlab Connect
+
+
+    .jumbotron
+        .container-fluid
+            .row-fluid.well-lg
+                .container-fluid
+                    button.btn.btn-primary.btn-lg.pull-left.btn.btn-space(role='button',  onClick="onCalReading()")
+                        i.fa.fa-download.fa-3x.pull-left
+                        | Cal Reading
+                    button.btn.btn-primary.btn-lg.pull-left.btn.btn-space(role='button',  onclick="onBarcode()")
+                        i.fa.fa-barcode.fa-3x.pull-left
+                        | Barcode
+                    button.btn.btn-primary.btn-lg.pull-left.btn.btn-space(role='button',  onclick="onCommPortList()")
+                        i.fa.fa-list-alt.fa-3x.pull-left
+                        | Comm Port List
+                    button.btn.btn-primary.btn-lg.pull-left.btn.btn-space(role='button',  onclick="onCalStatus()")
+                        i.fa.fa-stethoscope.fa-3x.pull-left
+                        | Cal Status
+
+                hr
+                iframe(width = '100%', height='100', frameborder='yes', id="myFrame", src= "" style="border:1px solid grey")
+
+
+
+
+

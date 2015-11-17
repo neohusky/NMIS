@@ -1,0 +1,22 @@
+extends layout
+block pageTitle
+    .jumbotron
+        h1 About
+        h2 Hotlab Connect
+        p Theo Kitsos
+        p The Children's Hospital Westmead
+
+
+form(role='form')
+        .form-group
+            label(for='CommPortName') Comm Port:
+            input#CommPortName.form-control(type='CommPortName')
+
+        .form-group
+            label(for='Baud') Baud Rate:
+            input#Baud.form-control(type='Baud')
+        .form-group
+            label(for='webport') Web Port:
+            input#webport.form-control(type='webport')
+        button.btn.btn-default(type='submit') Submit
+

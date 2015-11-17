@@ -1,0 +1,47 @@
+extends layout
+block pageTitle
+    .jumbotron
+        h1 Hotlab Connect
+        h2 Hotlab Connect is the gateway to access Hotlab peripherals. Currently Atomlab 100 Dose calibrators and Barcode Scanners are supported..
+
+
+    .jumbotron
+        .container-fluid
+            .row-fluid.well-lg
+                .container-fluid
+                    h2 Functions Available
+                    hr
+                    p
+                        b /labelupload
+                        p
+                        | Used to upload a zpl label file for printing. HotlabConnect will receive,print and then delete the label file.
+                    hr
+                    p
+                        b /settings
+                        p
+                        | Used to configure the settings of HotlabConnect.
+                    hr
+                    p
+                        b /getCommPorts
+                        p
+                        | Shows a list of available CommPorts on HotlabConnect.
+                    hr
+                    p
+                        b /getCalReading
+                        p
+                        | Retrieves the Dose calibrator reading.
+                    hr
+                    p
+                        b /getBarcode
+                        p
+                        | Retrieves the Dose calibrator status.
+                    hr
+                    p
+                        b /getBarcode
+                        p
+                        | Retrieves the last read barcode.
+                    hr
+                    p
+                        b /control/:isotope
+                        p
+                        | Sets the Dose calibrator Isotope.

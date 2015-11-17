@@ -1,0 +1,18 @@
+Configuration loaded from file
+The DoseCal Type is set to Atomlab-100
+The DoseCal ComPort is set to /dev/ttyUSB1
+The DoseCal ComPort Baud is set to 4800
+The DoseCal ComPort DataBits is set to 8
+The DoseCal ComPort StopBits is set to 1
+The DoseCal ComPort parity is set to none
+The Well Counter Enabled is set to false
+The WellCounter ComPort is set to /dev/ttyUSB3
+The WellCounter ComPort Baud is set to 9600
+The WellCounter ComPort DataBits is set to 8
+The WellCounter ComPort StopBits is set to 1
+The WellCounter ComPort parity is set to none
+The Web Port is set to 8080
+The Print Server is set to true
+The Printer Name is set to Zebra
+The Print Server Folder is set to ./print/
+The Print service is enabled

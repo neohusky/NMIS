@@ -1,0 +1,19 @@
+extends layout
+block pageTitle
+
+
+    .jumbotron
+        h1 Admin
+        h2 Hotlab Connect
+
+        .container-fluid
+            button.btn.btn-primary.btn-lg.pull-left.btn.btn-space(role='button',  onClick="onResetComm()")
+                i.fa.fa-repeat.fa-5x.pull-left
+                | Reset Comm Port
+            button.btn.btn-primary.btn-lg.pull-left.btn.btn-space(role='button',  onclick="onRebootConfirm()")
+                i.fa.fa-refresh.fa-5x.pull-left
+                | Reboot
+            button.btn.btn-primary.btn-lg.pull-left.btn.btn-space(role='button',  onclick="onShutdown()")
+                i.fa.fa-power-off.fa-5x.pull-left
+                | Shutdown
+
