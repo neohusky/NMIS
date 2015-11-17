@@ -7,7 +7,6 @@ var toolbar = {
     // Main Toolbar
     main: function () {
         // create toolbar
-        var appToolbar;
         var items = [
             {type: "button", id: "btnHome", text: "", img: "home.png", imgdis: "", title: "Home"},
             {type: "separator", id: "sep01"},
@@ -41,7 +40,7 @@ var toolbar = {
                 case "btnDoses": callbacks.removeClick(); break;
                 case "btnOrdering": callbacks.addClick(); break;
                 case "btnAdmin": callbacks.removeClick(); break;
-                case "btnSettings": settings.form(); break;
+                case "btnSettings": view.settings(); break;
                 case "btnLogout": callbacks.addClick(); break;
                 case "btnUser": callbacks.removeClick(); break;
                 default: break;
@@ -50,32 +49,41 @@ var toolbar = {
 
     },
     generators: function () {
-        var subToolbar;
+
         var items = [
             {type: "button", id: "btnAddNew", text: "AddNew", img: "", imgdis: "", title: "Add New"},
             {type: "separator", id: "sep01"},
             {type: "button", id: "btnDecommission", text: "Decommission", img: "", title: "Decommission"},
             {type: "separator", id: "sep02"},
             {type: "button", id: "btnInventory", text: "Inventory", img: "", title: "Inventory"},
-            {type: "separator", id: "sep03"}
+            {type: "separator", id: "sep03"},
+            {type: "button", id: "btnEdit", text: "Edit", img: "", title: "Edit", enabled:"false"},
+            {type: "separator", id: "sep04", hidden: "true", enabled:"false"},
+            {type: "button", id: "btnReprint", text: "Reprint", img: "", title: "Reprint", enabled:"false"},
+            {type: "separator", id: "sep05", hidden: "true", enabled:"false"}
         ];
 
         callbacks.clearDashboard();
 
-        subToolbar = appLayout.cells("a").attachToolbar();
-        subToolbar.loadStruct(items);
+        appSubToolbar = appLayout.cells("a").attachToolbar();
+        appSubToolbar.loadStruct(items);
+        // Setup toolbar
         // attach toolbar events
-        subToolbar.attachEvent("onClick", function (id) {
+        appSubToolbar.attachEvent("onClick", function (id) {
             switch (id) {
-                case "btnAddNew": callbacks.showPopup(); break;
+                case "btnAddNew": view.generatorEntry(); break;
                 case "btnDecommission": dhtmlx.alert("generator:Decomission"); break;
-                case "btnInventory": dhtmlx.alert("Inventory"); break;
+                case "btnInventory": view.generatorGrid();
+                    callbacks.setToolbarItemStates();
+                    break;
+                case "btnEdit": view.generatorEntry(parseInt(appGrid.getSelectedRowId)); break;
+                case "btnReprint": dhtmlx.alert("Reprinting generator label."); break;
                 default: break;
             }
         });
     },
     home: function () {
-        var subToolbar;
+
         var items = [
             {type: "button", id: "btnDecomission", text: "Decomission", img: "", imgdis: "", title: "Add New"},
             {type: "separator", id: "sep01"},
@@ -84,11 +92,11 @@ var toolbar = {
         ];
 
         callbacks.clearDashboard();
-        
-        subToolbar = appLayout.cells("a").attachToolbar();
-        subToolbar.loadStruct(items);
 
-        subToolbar.attachEvent("onClick", function (id) {
+        appSubToolbar = appLayout.cells("a").attachToolbar();
+        appSubToolbar.loadStruct(items);
+
+        appSubToolbar.attachEvent("onClick", function (id) {
             switch (id) {
                 case "btnDecomission": dhtmlx.alert("home:Decomission"); break;
                 case "btnWaste": dhtmlx.alert("home:Waste"); break;
