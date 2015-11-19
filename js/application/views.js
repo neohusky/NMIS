@@ -1,6 +1,8 @@
 /**
  * Created by nucmed on 17/11/2015.
  */
+var combo;
+
 var view = {
     settings: function () {
         var settingsForm;
@@ -171,6 +173,7 @@ var view = {
                 //mainForm.setItemFocus("BatchNo");
                 generatorForm.setItemValue("ArrivalDate",callbacks.getDateTime());
                 generatorForm.setItemValue("Username",config.UserName);
+                combo = generatorForm.getCombo("Supplier");
             });
             if ( id >= 0){
                 generatorForm.load("data/FormGenerators.php?id="+id);
@@ -229,5 +232,132 @@ var view = {
         appGrid.attachEvent("onRowSelect", function(id,ind){
             msgbox(("Rows with id: "+id+" was selected by user. Index was: "+ind));
     });
-}
+    },
+    chartKits : function(){
+
+        var myBarChart;
+        myBarChart = appLayout.cells("a").attachChart({
+
+            view:"stackedBar",
+            container:"chart1",
+            value:"#percentRemaining#",
+            label:"#percentRemaining#",
+            color: "#58dccd",
+            gradient:"falling",
+            width:120,
+            tooltip:{
+                template:"#percentRemaining#"
+            },
+            xAxis:{
+                template:"#Abbreviation#"
+            },
+            yAxis:{},
+            legend:{
+                values:[{text:"Type A",color:"#36abee"},{text:"Type B",color:"#a7ee70"}],
+                valign:"middle",
+                align:"right",
+                width:90,
+                layout:"y"
+            }
+        });
+        myBarChart.addSeries({
+            value:"#percentUsed#",
+            color:"#a7ee70",
+            label:"#percentUsed#",
+            tooltip:{
+                template:"#percentUsed#"
+            }
+        });
+        myBarChart.load("data/chartKits.php");
+
+
+    },
+    chartKits2 : function(){
+        var layout2 = appLayout.cells("a").attachLayout({
+            parent:     "layoutObj",    // id/object, parent container where layout will be located
+            pattern:    "3U",           // string, layout's pattern
+            skin:       "dhx_skyblue",  // string, optional,"dhx_skyblue","dhx_web","dhx_terrace"
+
+            offsets: {          // optional, offsets for fullscreen init
+                top:    10,     // you can specify all four sides
+                right:  10,     // or only the side where you want to have an offset
+                bottom: 10,
+                left:   10
+            },
+
+            cells: [    // optional, cells configuration according to the pattern
+                // you can specify only the cells you want to configure
+                // all params are optional
+                {
+                    id:             "a",        // id of the cell you want to configure
+                    text:           "Graphs",     // header text
+                    collapsed_text: "Text 2",   // header text for a collapsed cell
+                    header:         false,      // hide header on init
+                    width:          500,        // cell init width
+                    height:         400,        // cell init height
+                    collapse:       false,        // collapse on init
+                    fix_size:       [null,null] // fix cell's size, [width,height]
+                },
+                {
+                    id: "b",        // id of the cell you want to configure
+                    text: "Graphs",     // header text
+                    collapsed_text: "Text 2",   // header text for a collapsed cell
+                    header: false,      // hide header on init
+                    width: 500,        // cell init width
+                    height: 400,        // cell init height
+                    collapse: false,        // collapse on init
+                    fix_size: [null, null] // fix cell's size, [width,height]} // other cell if any
+                },
+                {
+                    id: "c",        // id of the cell you want to configure
+                    text: "Graphs",     // header text
+                    collapsed_text: "Text 2",   // header text for a collapsed cell
+                    header: false,      // hide header on init
+                    width: 1000,        // cell init width
+                    height: 300,        // cell init height
+                    collapse: false,        // collapse on init
+                    fix_size: [null, null] // fix cell's size, [width,height]} // other cell if any
+                }
+
+        ]
+
+        });
+        var myBarChart;
+        myBarChart = layout2.cells("a").attachChart({
+
+            view:"stackedBar",
+            container:"chart1",
+            value:"#percentRemaining#",
+            label:"#RemainingActivity#"+" MBq",
+            color :function(obj){
+                    if (obj.percentRemaining < 10) return "#B067AA";
+                    return "#949aff";},
+            gradient:"",
+            width:100,
+            tooltip:{
+                template:"#percentRemaining#"
+            },
+            xAxis:{
+                title:"Kit",
+                template:"#Abbreviation#"
+            },
+            yAxis:{
+                title:"Amount Remaining (%)"}
+
+
+        });
+        myBarChart.addSeries({
+            value:"#percentUsed#",
+            label:"",
+            color:"#bebdff",
+            tooltip:{
+                template:"#percentUsed#"
+            }
+        });
+        myBarChart.load("data/chartKits.php");
+
+    }
+
+
+
 };
