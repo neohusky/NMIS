@@ -33,13 +33,13 @@ var toolbar = {
         appToolbar.attachEvent("onClick", function (id) {
             switch (id) {
                 case "btnHome": toolbar.home(); break;
-                case "btnPatients": callbacks.removeClick(); break;
+                case "btnPatients": toolbar.patient(); break;
                 case "btnGenerators": toolbar.generators(); break;
-                case "btnEluates": callbacks.removeClick(); break;
-                case "btnKits": callbacks.addClick(); break;
-                case "btnDoses": callbacks.removeClick(); break;
-                case "btnOrdering": callbacks.addClick(); break;
-                case "btnAdmin": callbacks.removeClick(); break;
+                case "btnEluates": toolbar.eluates(); break;
+                case "btnKits": toolbar.kits(); break;
+                case "btnDoses": toolbar.doses(); break;
+                case "btnOrdering": toolbar.ordering(); break;
+                case "btnAdmin": toolbar.admin(); break;
                 case "btnSettings": view.settings(); break;
                 case "btnLogout": callbacks.addClick(); break;
                 case "btnUser": callbacks.removeClick(); break;
@@ -101,6 +101,34 @@ var toolbar = {
                 case "btnDecomission": dhtmlx.alert("home:Decomission"); break;
                 case "btnWaste": dhtmlx.alert("home:Waste"); break;
 
+                default: break;
+            }
+        });
+    },
+    patient: function () {
+
+        var items = [
+            {type: "button", id: "btnWorklist", text: "Worklist", img: "", imgdis: "", title: "Worklist"},
+            {type: "separator", id: "sep01"},
+            {type: "button", id: "btnAllToday", text: "All Today", img: "", title: "All Today"},
+            {type: "separator", id: "sep02"},
+            {type: "button", id: "btnLast2Days", text: "Last 2 Days", img: "", title: "Last 2 Days"},
+            {type: "separator", id: "sep03"},
+            {type: "button", id: "btnLast7Days", text: "Last 7 Days", img: "", title: "Last 7 Days"},
+            {type: "separator", id: "sep04"}
+        ];
+
+        callbacks.clearDashboard();
+
+        appSubToolbar = appLayout.cells("a").attachToolbar();
+        appSubToolbar.loadStruct(items);
+
+        appSubToolbar.attachEvent("onClick", function (id) {
+            switch (id) {
+                case "btnWorklist": view.patientWorklist(); break;
+                case "btnAllToday": dhtmlx.alert("All Today"); break;
+                case "btnLast2Days": dhtmlx.alert("Last 2 Days"); break;
+                case "btnLast7Days": dhtmlx.alert("Last 7 Days"); break;
                 default: break;
             }
         });

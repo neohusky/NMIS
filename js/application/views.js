@@ -4,7 +4,7 @@
 var view = {
     settings: function () {
         var settingsForm;
-        var settingsTabbar;
+
         var items = [
             { type: "block", id:"tab1",
                 list: [
@@ -195,7 +195,8 @@ var view = {
             dp.init(generatorForm);
     },
     generatorGrid : function() {
-
+        varTitle =
+        appLayout.cells("a").attachToolbar();
         appGrid = appLayout.cells("a").attachGrid();
         appGrid.setImagePath(config.imagePath);
         appGrid.setHeader("id, BatchNo, Supplier, ArrivalDate");
@@ -212,6 +213,21 @@ var view = {
         appGrid.attachEvent("onRowSelect", function(rowId){
             callbacks.setToolbarItemStates();
         });
+    },
+    patientWorklist : function(){
+        appGrid =  appLayout.cells("a").attachGrid();
+        appGrid.setStyle("", "font-size:20px","", "");
 
-    }
+        appGrid.setHeader("Name, Patient ID, DOB, Sex, Procedure");
+        appGrid.setColTypes("ro,ro,ro,ro,ro");
+        appGrid.setColSorting('str,str,str,str,str');
+        appGrid.setInitWidths('250,150,150,50,250');
+        //hla.grid.load("data/dwl.php");
+        appGrid.load("data/gridWorklist.php");
+        appGrid.init();
+
+        appGrid.attachEvent("onRowSelect", function(id,ind){
+            msgbox(("Rows with id: "+id+" was selected by user. Index was: "+ind));
+    });
+}
 };

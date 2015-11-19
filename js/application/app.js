@@ -100,13 +100,7 @@ var callbacks = {
 		appLayout.cells("a").detachToolbar();
 
 	},
-    // Toolbar
-    addClick: function(){
-    	callbacks.showPopup();    	
-    },
-    removeClick: function(){
-    	storage.removeUser(appGrid.getSelectedRowId());
-    },
+
   setToolbarItemStates: function(){
     	if(appGrid.getSelectedRowId()){
 			appSubToolbar.enableItem("btnEdit");
@@ -147,7 +141,8 @@ dhtmlxEvent(window, "load", function(){
 	toolbar.main();
 	toolbar.home();
 });
-
+// Settings
+var settingsTabbar;
 // App Grid
 var appGrid;
 
