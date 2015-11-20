@@ -120,8 +120,7 @@ var callbacks = {
 var appLayout;
 dhtmlxEvent(window, "load", function(){
 	appLayout = new dhtmlXLayoutObject(document.body, "3L");
-	appLayout.cells("a").setText('Main');
-	appLayout.cells("a").hideHeader();
+	appLayout.cells("a").setText('<h2 style="color:blue;text-align:center;vertical-align: top">This is a heading.</h2>');
 
 	appLayout.cells("b").setText('Login');
 	appLayout.cells("b").setWidth('300');
@@ -139,7 +138,7 @@ dhtmlxEvent(window, "load", function(){
 	var appToolbar;
 	var appSubToolbar;
 	toolbar.main();
-	toolbar.home();
+	//toolbar.home();
 });
 // Settings
 var settingsTabbar;
