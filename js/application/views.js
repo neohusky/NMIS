@@ -276,7 +276,7 @@ var view = {
         var layout2 = appLayout.cells("a").attachLayout({
             parent:     "layoutObj",    // id/object, parent container where layout will be located
             pattern:    "3U",           // string, layout's pattern
-            skin:       "dhx_skyblue",  // string, optional,"dhx_skyblue","dhx_web","dhx_terrace"
+            //skin:       "dhx_web",  // string, optional,"dhx_skyblue","dhx_web","dhx_terrace"
 
             offsets: {          // optional, offsets for fullscreen init
                 top:    10,     // you can specify all four sides
@@ -322,8 +322,8 @@ var view = {
         ]
 
         });
-        var myBarChart;
-        myBarChart = layout2.cells("a").attachChart({
+        var chartKit;
+        chartKit = layout2.cells("a").attachChart({
 
             view:"stackedBar",
             container:"chart1",
@@ -346,7 +346,7 @@ var view = {
 
 
         });
-        myBarChart.addSeries({
+        chartKit.addSeries({
             value:"#percentUsed#",
             label:"",
             color:"#bebdff",
@@ -354,7 +354,41 @@ var view = {
                 template:"#percentUsed#"
             }
         });
-        myBarChart.load("data/chartKits.php");
+        chartKit.load("data/chartKits.php");
+
+        var chartEluate;
+        chartEluate = layout2.cells("a").attachChart({
+
+            view:"stackedBar",
+            container:"chart1",
+            value:"#percentRemaining#",
+            label:"#RemainingActivity#"+" MBq",
+            color :function(obj){
+                if (obj.percentRemaining < 10) return "#B067AA";
+                return "#949aff";},
+            gradient:"",
+            width:100,
+            tooltip:{
+                template:"#percentRemaining#"
+            },
+            xAxis:{
+                title:"Kit",
+                template:"#Abbreviation#"
+            },
+            yAxis:{
+                title:"Amount Remaining (%)"}
+
+
+        });
+        chartEluate.addSeries({
+            value:"#percentUsed#",
+            label:"",
+            color:"#bebdff",
+            tooltip:{
+                template:"#percentUsed#"
+            }
+        });
+        chartEluate.load("data/chartKits.php");
 
     },
     dispensePtDose : function(){

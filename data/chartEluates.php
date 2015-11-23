@@ -2,8 +2,6 @@
 	require_once('config.php');
 	require_once("../js/dhtmlx/chart_connector.php");
 
-
-
 	$conn = new ChartConnector($conn);
  	$conn->enable_log("log.txt",true);
 	$conn->render_complex_sql(
