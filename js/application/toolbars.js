@@ -134,6 +134,25 @@ var toolbar = {
                 default: break;
             }
         });
+    },
+    doses: function () {
+
+        var items = [
+            {type: "button", id: "btnDispense", text: "Dispense", img: "", imgdis: "", title: "Worklist"}
+
+        ];
+
+        callbacks.clearDashboard();
+
+        appSubToolbar = appLayout.cells("a").attachToolbar();
+        appSubToolbar.loadStruct(items);
+
+        appSubToolbar.attachEvent("onClick", function (id) {
+            switch (id) {
+                case "btnDispense": view.dispensePtDose(); break;
+                default: break;
+            }
+        });
     }
 };
 

@@ -356,8 +356,84 @@ var view = {
         });
         myBarChart.load("data/chartKits.php");
 
-    }
+    },
+    dispensePtDose : function(){
 
+        var items = [
+            { type:"settings" , labelWidth:5, inputWidth:250,position:"absolute"},
+            {
+                type: "input",
+                name: "LastName",
+                inputWidth: 300,
+                inputLeft: 5,
+                inputTop: 20
+            },
+            {
+                type: "input",
+                name: "FirstName",
+                inputWidth: 200,
+                inputLeft: 310,
+                inputTop: 20
+            },
+            {
+                type: "input",
+                name: "PatientID",
+                inputWidth: 100,
+                inputLeft: 520,
+                inputTop: 20
+            },
+
+            {
+                type: "input",
+                name: "DOB",
+                inputWidth: 100,
+                inputLeft: 630,
+                inputTop: 20
+            },
+            {
+                type: "input",
+                name: "ProcedureType",
+                label: "Procedure Type",
+                labelWidth: 250,
+                labelLeft: 5,
+                labelTop: 70,
+                inputLeft: 5,
+                inputTop: 100
+            },
+            {
+                type: "container",
+                name: "gridPreviousRadiopharmaceuticals",
+                label: "Radiopharmaceuticals previously dispensed",
+                labelWidth: "auto",
+                labelLeft: 5,
+                labelTop: 150,
+                inputLeft: 5,
+                inputTop: 180,
+                inputWidth: 750,
+                inputHeight:150
+            }
+        ];
+        var doseForm = appLayout.cells("a").attachForm();
+        doseForm.setFontSize("20px");
+        doseForm.loadStruct(items,function() {
+            //mainForm.setItemFocus("BatchNo");
+
+        });
+
+        var historyGrid = new dhtmlXGridObject(doseForm.getContainer('gridPreviousRadiopharmaceuticals'));
+        historyGrid.setIconsPath(config.iconPath);
+        historyGrid.setHeader(["Date","Study Type","Radiopharmaceutical","Dispensed Activity"]);
+        historyGrid.setColTypes("ro,ro,ro,ro");
+
+        historyGrid.enableResizing('true,false,true,true');
+        historyGrid.setColSorting('date,str,str,int');
+        historyGrid.setInitWidths('60,*,*,*');
+        historyGrid.attachEvent('onEditCell', function(stage,rId,cInd,nValue,oValue) {return false;});
+        historyGrid.enableKeyboardSupport(false);
+        historyGrid.init();
+        historyGrid.load('data/gridGenerators.php');
+
+    }
 
 
 };

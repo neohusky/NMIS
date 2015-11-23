@@ -120,7 +120,7 @@ var callbacks = {
 var appLayout;
 dhtmlxEvent(window, "load", function(){
 	appLayout = new dhtmlXLayoutObject(document.body, "3L");
-	appLayout.cells("a").setText('<h2 style="color:blue;text-align:center;vertical-align: top">This is a heading.</h2>');
+	//appLayout.cells("a").setText('<h2 style="color:blue;text-align:center;vertical-align: top">This is a heading.</h2>');
 
 	appLayout.cells("b").setText('Login');
 	appLayout.cells("b").setWidth('300');
