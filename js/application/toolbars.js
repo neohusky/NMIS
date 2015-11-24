@@ -104,7 +104,7 @@ var toolbar = {
                 default: break;
             }
         });
-        view.chartKits2();
+        view.chartKits();
 
     },
     patient: function () {

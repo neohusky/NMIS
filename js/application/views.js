@@ -234,46 +234,7 @@ var view = {
     });
     },
     chartKits : function(){
-
-        var myBarChart;
-        myBarChart = appLayout.cells("a").attachChart({
-
-            view:"stackedBar",
-            container:"chart1",
-            value:"#percentRemaining#",
-            label:"#percentRemaining#",
-            color: "#58dccd",
-            gradient:"falling",
-            width:120,
-            tooltip:{
-                template:"#percentRemaining#"
-            },
-            xAxis:{
-                template:"#Abbreviation#"
-            },
-            yAxis:{},
-            legend:{
-                values:[{text:"Type A",color:"#36abee"},{text:"Type B",color:"#a7ee70"}],
-                valign:"middle",
-                align:"right",
-                width:90,
-                layout:"y"
-            }
-        });
-        myBarChart.addSeries({
-            value:"#percentUsed#",
-            color:"#a7ee70",
-            label:"#percentUsed#",
-            tooltip:{
-                template:"#percentUsed#"
-            }
-        });
-        myBarChart.load("data/chartKits.php");
-
-
-    },
-    chartKits2 : function(){
-        var layout2 = appLayout.cells("a").attachLayout({
+        var dashLayout = appLayout.cells("a").attachLayout({
             parent:     "layoutObj",    // id/object, parent container where layout will be located
             pattern:    "3U",           // string, layout's pattern
             //skin:       "dhx_web",  // string, optional,"dhx_skyblue","dhx_web","dhx_terrace"
@@ -319,11 +280,22 @@ var view = {
                     fix_size: [null, null] // fix cell's size, [width,height]} // other cell if any
                 }
 
+
+
         ]
 
         });
+        var chartAccordian = dashLayout.cells("a").attachAccordion({
+            icons_path: "../common/icons/",
+            items: [
+                { id: "a1", text: "Eluates", icon: "flag_red.png" },
+                { id: "a2", text: "Kits", icon: "flag_green.png" }
+            ]
+        });
+
+
         var chartKit;
-        chartKit = layout2.cells("a").attachChart({
+        chartKit = chartAccordian.cells("a2").attachChart({
 
             view:"stackedBar",
             container:"chart1",
@@ -357,7 +329,7 @@ var view = {
         chartKit.load("data/chartKits.php");
 
         var chartEluate;
-        chartEluate = layout2.cells("a").attachChart({
+        chartEluate = chartAccordian.cells("a1").attachChart({
 
             view:"stackedBar",
             container:"chart1",
@@ -372,8 +344,8 @@ var view = {
                 template:"#percentRemaining#"
             },
             xAxis:{
-                title:"Kit",
-                template:"#Abbreviation#"
+                title:"Eluate",
+                template:"#EluateID#"
             },
             yAxis:{
                 title:"Amount Remaining (%)"}
@@ -388,7 +360,7 @@ var view = {
                 template:"#percentUsed#"
             }
         });
-        chartEluate.load("data/chartKits.php");
+        chartEluate.load("data/chartEluates.php");
 
     },
     dispensePtDose : function(){
