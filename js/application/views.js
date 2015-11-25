@@ -439,6 +439,40 @@ var view = {
         historyGrid.init();
         historyGrid.load('data/gridGenerators.php');
 
+    },
+    timeDisplay : function(){
+
+        var items = [
+            { type:"settings" , labelWidth:5, inputWidth:250,position:"absolute"},
+            {
+                type: "input",
+                name: "Barcode",
+                inputWidth: 300,
+                inputLeft: 5,
+                inputTop: 10
+            },
+            {
+                type: "container",
+                name: "Date",
+                label: "Date",
+                labelWidth: "auto",
+                labelLeft: 5,
+                labelTop: 40,
+                inputLeft: 5,
+                inputTop: 50,
+                inputWidth: 750,
+                inputHeight:150
+            }
+        ];
+/*        var timeForm = appLayout.cells("c").attachForm();
+        timeForm.setFontSize("15px");
+        timeForm.loadStruct(items,function() {
+            //mainForm.setItemFocus("BatchNo");
+
+        });*/
+        //appLayout.cells("c").attachHTMLString('<div id="clockbox" style="font:16pt Arial; color:#287ec7;" </div>');
+        appLayout.cells("c").attachHTMLString('<div id="clockbox" style="font:16pt Arial; color:#287ec7;" </div>');
+
     }
 
 
