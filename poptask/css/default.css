@@ -1,0 +1,207 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+input, .ui-widget{
+	font-size:12px;
+}
+.ui-button{
+	height:28px;
+	font-family:'Roboto',Tahoma;
+}
+.ui-menu-item, .ui-datepicker-title, .ui-tooltip{
+	font-size:12px;	
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body *{
+	font-family:'Roboto',Tahoma;
+}
+
+body {
+	background: #DCDDDF url(img/bg.png);
+	line-height: 1;
+	font-family:'Roboto',Tahoma;
+	font-size: 12px;
+	margin: 0 auto;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.header{
+	width:90%; 
+	//background-image:url('img/1023.png');
+	border-top:0px none;
+	margin-left: auto ;  
+	margin-right: auto ; 
+	border-bottom-left-radius:5px; 
+	border-bottom-right-radius:5px
+}
+.workingtable{
+	width:90%;
+	margin-left: auto ;
+    margin-right: auto ;
+	background-color:#FFF;
+	font-size:14px;
+}
+.workingtable tr{
+	height:23px;
+}
+
+.workingtable tr th{
+	font-family:'Roboto',Tahoma;
+	background-color:#e6e6e6;
+	background-size:100% 100%;
+	background-repeat:repeat-x;
+	border-bottom:1px solid #AAA;
+	color:#000;
+	text-align:left;
+	padding:4px;
+	padding-top:6px;
+}
+.workingtable tr td{
+	font-family:'Roboto',Tahoma;
+	padding:5px 0 0 2px;
+	cursor:default;
+	border-left:0px none;
+	border-right:0px none;
+	
+	vertical-align:top;
+}
+.workingtable tr td:first-child{
+	padding-left:5px;
+}
+.workingtable tr td:last-child{
+	margin-right:4px;
+}
+.workingtable tr td select{
+	width:100%;
+}
+.rowhover{
+	background-color:#eee;
+}
+#dateselector{
+	cursor:pointer;
+	padding-top:4px;
+	padding-bottom:3px;
+	font-size:13px;
+	width:160px;
+	height:19px;
+	text-align:center;
+	color:#FFF;
+	border: 1px solid #d3d3d3;
+	background: #e6e6e6 url(images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+	font-weight: normal;
+	color: #555;
+	border-radius:3px;
+}
+
+#dateselector:hover{
+	border: 1px solid #C0C0C0;
+	color:#000;
+}
+.selectedrow{
+	background-color:#A4D3EE;
+}
+#editdialog input, #editdialog textarea{
+	width:100%;
+	font-family:'Roboto',Tahoma;
+}
+#adddialog input, #adddialog textarea{
+	width:100%;
+	font-family:'Roboto',Tahoma;
+}
+.addtable tr td{
+	padding:5px;
+}
+.detailbutton{
+	cursor:pointer;
+}
+.moredetail{
+	padding-top:3px;
+	color:#aaa;
+	height:1.2em;
+	overflow:hidden;
+}
+.moredetailbtn{
+	float:right; 
+	color:#aaa; 
+	margin-top:-12px;
+}
+.moredetailbtn:hover{
+	text-decoration:underline;
+	cursor:pointer;
+}
+.taskitem{
+	width:90%; 
+	border:1px solid #C0C0C0; 
+	background-color:#FFF;  
+	margin-left: auto ;  
+	margin-right: auto ; 
+	padding:10px; 
+	margin-top:20px;
+	-webkit-box-shadow: -1px 6px 23px -7px rgba(0,0,0,0.75);
+	-moz-box-shadow: -1px 6px 23px -7px rgba(0,0,0,0.75);
+	box-shadow: -1px 3px 20px -7px rgba(0,0,0,0.75);
+}
+.actionbar{
+	width:90%;
+	margin-left: auto ;
+    margin-right: auto ;
+	text-align:left;
+	font-size:12px	
+}
+input{
+	border:1px solid #C0C0C0;
+	font-family:'Roboto',Tahoma;
+}
+input:invalid, textarea:invalid{
+	border:1px solid #ff6666;
+}
+.ui-pnotify-title{
+	text-transform:capitalize;
+}
+{
+border-radius:0px;	
+}
+.notes {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
