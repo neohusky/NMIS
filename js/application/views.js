@@ -233,7 +233,7 @@ var view = {
             msgbox(("Rows with id: "+id+" was selected by user. Index was: "+ind));
     });
     },
-    chartKits : function(){
+    dashboardV1 : function(){
         var dashLayout = appLayout.cells("a").attachLayout({
             parent:     "layoutObj",    // id/object, parent container where layout will be located
             pattern:    "3U",           // string, layout's pattern
@@ -361,6 +361,161 @@ var view = {
             }
         });
         chartEluate.load("data/chartEluates.php");
+        /////Patient Worklist on Dashboard
+        var gridPatients;
+        gridPatients =  dashLayout.cells("c").attachGrid();
+        gridPatients.setStyle("", "font-size:20px","", "");
+
+        gridPatients.setHeader("Name, Patient ID, DOB, Sex, Procedure");
+        gridPatients.setColTypes("ro,ro,ro,ro,ro");
+        gridPatients.setColSorting('str,str,str,str,str');
+        gridPatients.setInitWidths('250,150,150,50,250');
+        //hla.grid.load("data/dwl.php");
+        gridPatients.load("data/gridWorklist.php");
+        gridPatients.init();
+
+        gridPatients.attachEvent("onRowSelect", function(id,ind){
+            msgbox(("Rows with id: "+id+" was selected by user. Index was: "+ind));
+        });
+
+    },
+    dashboard : function(){
+        var dashLayout = appLayout.cells("a").attachLayout({
+            parent:     "layoutObj",    // id/object, parent container where layout will be located
+            pattern:    "3U",           // string, layout's pattern
+            //skin:       "dhx_web",  // string, optional,"dhx_skyblue","dhx_web","dhx_terrace"
+
+            offsets: {          // optional, offsets for fullscreen init
+                top:    10,     // you can specify all four sides
+                right:  10,     // or only the side where you want to have an offset
+                bottom: 10,
+                left:   10
+            },
+
+            cells: [    // optional, cells configuration according to the pattern
+                // you can specify only the cells you want to configure
+                // all params are optional
+                {
+                    id:             "a",        // id of the cell you want to configure
+                    text:           "Kits",     // header text
+                    collapsed_text: "Text 2",   // header text for a collapsed cell
+                    header:         false,      // hide header on init
+                    width:          500,        // cell init width
+                    height:         300,        // cell init height
+                    collapse:       false,        // collapse on init
+                    fix_size:       [1,1] // fix cell's size, [width,height]
+                },
+                {
+                    id: "b",        // id of the cell you want to configure
+                    text: "Eluates",     // header text
+                    collapsed_text: "Text 2",   // header text for a collapsed cell
+                    header: false,      // hide header on init
+                    width: 300,        // cell init width
+                    height: 300,        // cell init height
+                    collapse: false,        // collapse on init
+                    fix_size: [null, null] // fix cell's size, [width,height]} // other cell if any
+                },
+                {
+                    id: "c",        // id of the cell you want to configure
+                    text: "Worklist",     // header text
+                    collapsed_text: "Text 2",   // header text for a collapsed cell
+                    header: false,      // hide header on init
+                    width: 1000,        // cell init width
+                    height: 300,        // cell init height
+                    collapse: false,        // collapse on init
+                    fix_size: [null, null] // fix cell's size, [width,height]} // other cell if any
+                }
+
+
+
+            ]
+
+        });
+
+
+        var chartKit;
+        chartKit = dashLayout.cells("a").attachChart({
+
+            view:"stackedBar",
+            container:"chart1",
+            value:"#percentRemaining#",
+            label:"#RemainingActivity#"+" MBq",
+            color :function(obj){
+                if (obj.percentRemaining < 10) return "#B067AA";
+                return "#949aff";},
+            gradient:"",
+            width:100,
+            tooltip:{
+                template:"#percentRemaining#"
+            },
+            xAxis:{
+                title:"Kit",
+                template:"#Abbreviation#"
+            },
+            yAxis:{
+                title:"Amount Remaining (%)"}
+
+
+        });
+        chartKit.addSeries({
+            value:"#percentUsed#",
+            label:"",
+            color:"#bebdff",
+            tooltip:{
+                template:"#percentUsed#"
+            }
+        });
+        chartKit.load("data/chartKits.php");
+
+        var chartEluate;
+        chartEluate = dashLayout.cells("b").attachChart({
+
+            view:"stackedBar",
+            container:"chart1",
+            value:"#percentRemaining#",
+            label:"#RemainingActivity#"+" MBq",
+            color :function(obj){
+                if (obj.percentRemaining < 10) return "#B067AA";
+                return "#949aff";},
+            gradient:"",
+            width:100,
+            tooltip:{
+                template:"#percentRemaining#"
+            },
+            xAxis:{
+                title:"Eluate",
+                template:"#EluateID#"
+            },
+            yAxis:{
+                title:"Amount Remaining (%)"}
+
+
+        });
+        chartEluate.addSeries({
+            value:"#percentUsed#",
+            label:"",
+            color:"#bebdff",
+            tooltip:{
+                template:"#percentUsed#"
+            }
+        });
+        chartEluate.load("data/chartEluates.php");
+        /////Patient Worklist on Dashboard
+        var gridPatients;
+        gridPatients =  dashLayout.cells("c").attachGrid();
+        gridPatients.setStyle("", "font-size:19px","", "");
+
+        gridPatients.setHeader("Name, Patient ID, DOB, Sex, Procedure");
+        gridPatients.setColTypes("ro,ro,ro,ro,ro");
+        gridPatients.setColSorting('str,str,str,str,str');
+        gridPatients.setInitWidths('250,130,100,40,250');
+        //hla.grid.load("data/dwl.php");
+        gridPatients.load("data/gridWorklist.php");
+        gridPatients.init();
+
+        gridPatients.attachEvent("onRowSelect", function(id,ind){
+            msgbox(("Rows with id: "+id+" was selected by user. Index was: "+ind));
+        });
 
     },
     dispensePtDose : function(){

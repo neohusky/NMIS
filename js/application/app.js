@@ -4,24 +4,15 @@ var config = {
 	HotlabConnectServer: "",
 	HotlabConnectPort: "",
 	UserName: "theok",
-	TimeOut:""
+	TimeOut:"",
+	Barcode:"",
+	StaffName:"",
+	StaffPosition:""
+
+
 };
 var callbacks = {
 
-	GetAppSettings : function(){
-
-	dhx.ajax().get("data/appSettings.php?id=1", function(text,xml){
-		var AppSettings = dhx.DataDriver.json.toObject(text,xml);
-
-		config.TimeOut = AppSettings.AppSettings["0"].App_TimeOut;
-		config.HotlabConnectServer =AppSettings.AppSettings["0"].App_HotlabConnectServer;
-		config.HotlabConnectPort =AppSettings.AppSettings["0"].App_HotlabConnectPort;
-
-
-
-	});
-
-},
 	getDateTime : function() {
 		var now     = new Date();
 		var year    = now.getFullYear();
@@ -73,7 +64,7 @@ var callbacks = {
 			BarcodeData = ""
 		}
 		dhtmlx.message({
-			text: "url set to Hotlab COnnect:<br />" + url,
+			text: "url set to Hotlab Connect:<br />" + url,
 			expire: -1, //milliseconds. You can use negative value (-1) to make notice persistent.
 			type: "myNotice" // 'customCss' - css class
 		});
@@ -118,41 +109,44 @@ var callbacks = {
 
 // Layout
 var appLayout;
+var appToolbar;
+var appSubToolbar;
+var settingsTabbar;
+var appGrid;
+var generatorForm;
 dhtmlxEvent(window, "load", function(){
+
+
+	//Setup main window Layout
 	appLayout = new dhtmlXLayoutObject(document.body, "3L");
 	//appLayout.cells("a").setText('<h2 style="color:blue;text-align:center;vertical-align: top">This is a heading.</h2>');
 
 	appLayout.cells("b").setText('Notifications');
-	appLayout.cells("b").setWidth('300');
+	appLayout.cells("b").setWidth('250');
 	appLayout.cells("b").fixSize(1,1);
 
 	appLayout.cells("c").setText('Barcode');
 	appLayout.cells("c").setHeight('300');
-	appLayout.cells("c").setWidth('300');
-	view.timeDisplay()
-
-});
-
-// Toolbar
-
-dhtmlxEvent(window, "load", function(){
-	// create toolbar
-	var appToolbar;
-	var appSubToolbar;
+	appLayout.cells("c").setWidth('250');
+	view.timeDisplay();
 	toolbar.main();
-	//toolbar.home();
+	toolbar.home();
+
+	//
+	//Retrieve Application Settings
+	logic.getAppSettings();
+
+	//Retrieve User Details
+	logic.getUserDetails();
+
+	//Retrive Barcode every 5s
+	setInterval(logic.getBarcode,5000);
+
+	//Setup Clock and timer
+	GetClock();
+	setInterval(GetClock,1000);
+
 });
-// Settings
-var settingsTabbar;
-// App Grid
-var appGrid;
-
-// App Forms
-var generatorForm;
-
-//Retrieve Settings
-callbacks.GetAppSettings();
-
 
 
 //////////////////////////////
@@ -174,8 +168,18 @@ function GetClock(){
 
 }
 
+
+/*
+//Application Initialisation
 window.onload=function(){
+	//Retrieve Application Settings
+	getAppSettings();
+
+
+	//Retrive Barcode every 5s
+	setInterval(logic.GetBarcode,5000);
+
+	//Setup Clock and timer
 	GetClock();
 	setInterval(GetClock,1000);
-};
-
+};*/
