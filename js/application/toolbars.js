@@ -88,7 +88,11 @@ var toolbar = {
             {type: "button", id: "btnDecomission", text: "Decomission", img: "", imgdis: "", title: "Add New"},
             {type: "separator", id: "sep01"},
             {type: "button", id: "btnWaste", text: "Waste", img: "", title: "Inventory"},
-            {type: "separator", id: "sep02"}
+            {type: "separator", id: "sep02"},
+            {type: "button", id: "btnPrintTest", text: "PrintTest", img: "", title: "PrintTest"},
+            {type: "separator", id: "sep03"},
+            {type: "button", id: "btnPrintBatchTest", text: "PrintBatchTest", img: "", title: "PrintBatchTest"},
+            {type: "separator", id: "sep04"}
         ];
 
         callbacks.clearDashboard();
@@ -100,7 +104,8 @@ var toolbar = {
             switch (id) {
                 case "btnDecomission": dhtmlx.alert("home:Decomission"); break;
                 case "btnWaste": dhtmlx.alert("home:Waste"); break;
-
+                case "btnPrintTest": logic.printLabel("generator",2,3); break;
+                //case "btnPrintBatchTest": logic.printKitBatchLabel(3); break;
                 default: break;
             }
         });

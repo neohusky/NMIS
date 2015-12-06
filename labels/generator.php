@@ -9,11 +9,19 @@
 include('handler.php');
 
 $id  = $_REQUEST['id'];
+$copies   = $_REQUEST['copies'];
 
+
+if (!$copies){
+    $copiesURL = "";
+}else
+{
+    $copiesURL  = "/".$copies;
+}
 require_once('../data/config.php');
 
 
-$sql = "Select id,BatchNo, Supplier, ArrivalDate, Username
+$sql = "Select id, BatchNo, Supplier, ArrivalDate, Username
 		FROM nmis.generators
 		WHERE id = $id";
 

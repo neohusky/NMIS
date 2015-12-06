@@ -52,6 +52,59 @@ var logic = {
             //msgbox(Position);
 
         })
+    },
+    zplLastAddedId: function(tble){
+
+        dhx.ajax().get("data/lastadded.php?id="+tble, function(text,xml){
+            var id = dhx.DataDriver.json.toObject(text,xml);
+
+            id = id.id["0"].id;
+            //zplURL = "http://10.7.145.101/NMIS/labels/generator.php?id=" + id;
+            zplURL = "labels/generator.php?id=" + id;
+            dhtmlx.message({
+                text: zplURL ,
+                expire: -1, //milliseconds. You can use negative value (-1) to make notice persistent.
+                type: "myNotice" // 'customCss' - css class
+            });
+        });
+        return zplURL;
+    },
+/*    getLastAddedId: function(tble){
+
+        dhx.ajax().("data/lastadded.php?id="+tble, function(text,xml){
+            var id = dhx.DataDriver.json.toObject(text,xml);
+
+            id = id.id["0"].id;
+
+            dhtmlx.message({
+                text: "The id is:<br />"+id+" .table="+tble ,
+                expire: -1, //milliseconds. You can use negative value (-1) to make notice persistent.
+                type: "myNotice" // 'customCss' - css class
+            });
+        });
+        return id;
+    },*/
+    printLabel: function(label,id,copies){
+
+        var zplurl = "labels/"+ label + ".php?id=" + id +"&copies="+copies;
+        dhx.ajax().get(zplurl, function(text,xml){
+
+
+        });
     }
+/*    printKitBatchLabel: function(numberOfKits){
+        var id = logic.getLastAddedId("generators");
+
+
+        for (i = id-numberOfKits; i=id; i++) {
+            var zplurl = "labels/"+ "generator" + ".php?id=" + i;
+            dhx.ajax().get(zplurl, function(text,xml){
+
+
+            });
+        }
+
+
+    }*/
 
 };
