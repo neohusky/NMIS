@@ -598,18 +598,25 @@ var view = {
         historyGrid.load('data/gridPreviousDoses.php');
 
     },
-    timeDisplay : function(){
+    barCodeDisplay : function(){
 
         var items = [
             { type:"settings" , labelWidth:5, inputWidth:250,position:"absolute"},
             {
                 type: "template",
-                name: "Today",
+                name: "Date",
                 value: "Today",
                 format: format_a,
-                labelWidth: "auto",
-                labelLeft: 5,
-                labelTop: 10
+                inputLeft: 5,
+                inputTop: 0
+            },
+            {
+                type: "template",
+                name: "Time",
+                value: "Time",
+                format: format_a,
+                inputLeft: 5,
+                inputTop: 30
             },
             {
                 type: "input",
@@ -635,16 +642,33 @@ var view = {
         var barcodeForm = appLayout.cells("c").attachForm();
         barcodeForm.setFontSize("20px");
         barcodeForm.loadStruct(items,function() {
-            //mainForm.setItemFocus("BatchNo");
-
+            barcodeForm.setItemValue("barcode",config.Barcode);
         });
+        if (config.BarcodeIncomming !=""){
+            logic.barCodeReader(config.BarcodeIncomming);
+
+        }
 
     }
 
 
 };
 function format_a(name, value) {
-    if (name == "product") return "<div class='simple_bold'>"+value+"</div>";
-    if (name == "Today") return "<div id='clockbox' style='font:16pt Arial; color:#287ec7;' </div>'";
-    if (name == "link") return "<div class='simple_link'><a href='http://"+value+"' target='blank'>"+value+"</a></div>";
+    var d=new Date();
+    var nday=d.getDay(),nmonth=d.getMonth(),ndate=d.getDate();
+    var nhour=d.getHours(),nmin=d.getMinutes(),ap,nsec= d.getSeconds();
+    if(nhour==0){ap=" AM";nhour=12;}
+    else if(nhour<12){ap=" AM";}
+    else if(nhour==12){ap=" PM";}
+    else if(nhour>12){ap=" PM";nhour-=12;}
+
+    if(nmin<=9) nmin="0"+nmin;
+    if(nsec<=9) nsec="0"+nsec;
+
+    //if (name == "Date2") return "<div class='simple_bold'>"+value+"</div>";
+    if (name == "Date") return "<div style='font:16pt Arial; color:#2c85d5;'>"+tday[nday]+", "+tmonth[nmonth]+" "+ndate+"</div>";
+    if (name == "Time") return "<div style='font:32pt Arial; color:#287ec7;'>"+nhour+":"+nmin+":"+nsec+ap+"</div>";
+    //if (name == "Today") return "<div id='clockbox' style='font:16pt Arial; color:#287ec7;' </div>'";
+    //if (name == "link") return "<div class='simple_link'><a href='http://"+value+"' target='blank'>"+value+"</a></div>";
+
 }

@@ -5,7 +5,8 @@ var config = {
 	HotlabConnectPort: "",
 	UserName: "theok",
 	TimeOut:"",
-	Barcode:"",
+	BarcodeIncomming:"",
+	BarcodeScanned:"",
 	StaffName:"",
 	StaffPosition:""
 
@@ -115,6 +116,7 @@ var settingsTabbar;
 var appGrid;
 var generatorForm;
 var barcodeForm;
+var statusBar;
 dhtmlxEvent(window, "load", function(){
 
 
@@ -129,7 +131,8 @@ dhtmlxEvent(window, "load", function(){
 	appLayout.cells("c").setText('Barcode');
 	appLayout.cells("c").setHeight('300');
 	appLayout.cells("c").setWidth('250');
-	view.timeDisplay();
+	statusBar = appLayout.attachStatusBar();
+	view.barCodeDisplay();
 	toolbar.main();
 	toolbar.home();
 
@@ -144,9 +147,8 @@ dhtmlxEvent(window, "load", function(){
 	setInterval(logic.getBarcode,5000);
 
 	//Setup Clock and timer
-	GetClock();
-	setInterval(GetClock,1000);
-
+	//GetClock();
+	setInterval(view.barCodeDisplay,1000);
 });
 
 
@@ -165,7 +167,7 @@ function GetClock(){
 
 	if(nmin<=9) nmin="0"+nmin;
 
-	document.getElementById('clockbox').innerHTML=""+tday[nday]+", "+tmonth[nmonth]+" "+ndate+" <br> <br> "+nhour+":"+nmin+ap+"";
+	//document.getElementById('clockbox').innerHTML=""+tday[nday]+", "+tmonth[nmonth]+" "+ndate+" <br> <br> "+nhour+":"+nmin+ap+"";
 
 }
 

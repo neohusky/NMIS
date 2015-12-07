@@ -7,17 +7,17 @@ var logic = {
     getBarcode: function () {
         url = "http://" + config.HotlabConnectServer + ":" + config.HotlabConnectPort + "/getBarcode";
         //retrieve barcode data from hotlab connect if barcopde string is empty
-        if (config.Barcode==="") {
+        if (config.BarcodeIncomming==="") {
             dhx.ajax().get(url, function (text, xml) {
                 var obj = dhx.DataDriver.json.toObject(text, xml);
-                config.Barcode = obj["0"].Barcode;
+                config.BarcodeIncomming = obj["0"].Barcode;
                 //If there is no data the reformat undefined/null to "" string
-                if (config.Barcode === undefined || config.Barcode === null) {
-                    config.Barcode = "";
+                if (config.BarcodeIncomming === undefined || config.BarcodeIncomming === null) {
+                    config.BarcodeIncomming = "";
                     console.log("Funny data received and therefore reset config string to empty");
                 }
             });
-            console.log("Barcode data received and string updated to:"+config.Barcode);
+            console.log("Barcode data received and string updated to:"+config.BarcodeIncomming);
             //barcodeForm.setItemValue("barcode","Theo");
         }
     },
@@ -92,7 +92,29 @@ var logic = {
         console.log(zplurl);
 
         });
-    }
+    },
+    barCodeReader: function(value){
+        switch (value) {
+            case config.BarcodeScanned:
+                console.log("Incoming Barcode: " + config.BarcodeIncomming + "ScannedBarcode: " + config.BarcodeScanned);
+                logic.log("barcodeConfirm", config.BarcodeScanned);
+                config.BarcodeScanned = "";
+                dhtmlx.message({
+                    text: "Scan Successfull..Do Something" ,
+                    expire: -1, //milliseconds. You can use negative value (-1) to make notice persistent.
+                    type: "myNotice" // 'customCss' - css class
+                });
+                break;
+            default:
+                console.log(config.BarcodeIncomming);
+                config.BarcodeScanned = config.BarcodeIncomming;
+                logic.log("barcode", config.BarcodeScanned);
+                break;
+        }
+
+        config.BarcodeIncomming="";
+
+    },
 /*    printKitBatchLabel: function(numberOfKits){
         var id = logic.getLastAddedId("generators");
 
@@ -107,5 +129,14 @@ var logic = {
 
 
     }*/
+    log: function(Type,value){
 
+        switch (Type) {
+            case "barcode": statusBar.setText("Scanned Barcode:"+value+". Please rescan");break;
+            case "barcodeConfirm":statusBar.setText("Confirmed Barcode:"+value);break;
+            case "btnLast2Days": dhtmlx.alert("Last 2 Days"); break;
+            case "btnLast7Days": dhtmlx.alert("Last 7 Days"); break;
+            default: break;
+        }
+    }
 };
