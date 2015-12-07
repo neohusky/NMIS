@@ -76,8 +76,10 @@ var toolbar = {
                 case "btnInventory": view.generatorGrid();
                     callbacks.setToolbarItemStates();
                     break;
-                case "btnEdit": view.generatorEntry(parseInt(appGrid.getSelectedRowId)); break;
-                case "btnReprint": dhtmlx.alert("Reprinting generator label."); break;
+                case "btnEdit": view.generatorEntry(parseInt(appGrid.getSelectedRowId())); break;
+                case "btnReprint": logic.printLabel("generator",parseInt(appGrid.getSelectedRowId()),1);
+                    console.log(parseInt(appGrid.getSelectedRowId));
+                    break;
                 default: break;
             }
         });

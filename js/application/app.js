@@ -114,6 +114,7 @@ var appSubToolbar;
 var settingsTabbar;
 var appGrid;
 var generatorForm;
+var barcodeForm;
 dhtmlxEvent(window, "load", function(){
 
 

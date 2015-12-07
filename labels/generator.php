@@ -79,7 +79,7 @@ AAA;
 
 $URL = HotlabConnectURL($conn);
 
-$zplURL = $URL.$Barcode."/".rawurlencode($labelcode);
+$zplURL = $URL.$Barcode."/".rawurlencode($labelcode).$copiesURL;
 //$zplURL = $URL.$Barcode."/".$labelcode;
 //echo $Barcode;
 //echo $zplURL;

@@ -202,10 +202,10 @@ var view = {
         appLayout.cells("a").attachToolbar();
         appGrid = appLayout.cells("a").attachGrid();
         appGrid.setImagePath(config.imagePath);
-        appGrid.setHeader("id, BatchNo, Supplier, ArrivalDate");
-        appGrid.setColTypes("ro,ro,ro,ro");
-        appGrid.setColSorting('str,str,str,str');
-        appGrid.setInitWidths('*,*,*,*');
+        appGrid.setHeader("id, BatchNo, Supplier, ArrivalDate, button");
+        appGrid.setColTypes("ro,ro,ro,ro,button");
+        appGrid.setColSorting('str,str,str,str,str');
+        appGrid.setInitWidths('50,100,150,120,100');
         appGrid.load("data/gridGenerators.php");
         appGrid.init();
 
@@ -216,7 +216,10 @@ var view = {
         appGrid.attachEvent("onRowSelect", function(rowId){
             callbacks.setToolbarItemStates();
         });
+
+
     },
+
     patientWorklist : function(){
         appGrid =  appLayout.cells("a").attachGrid();
         appGrid.setStyle("", "font-size:20px","", "");
@@ -563,7 +566,7 @@ var view = {
             },
             {
                 type: "container",
-                name: "gridPreviousRadiopharmaceuticals",
+                name: "gridPreviousDoses",
                 label: "Radiopharmaceuticals previously dispensed",
                 labelWidth: "auto",
                 labelLeft: 5,
@@ -581,9 +584,9 @@ var view = {
 
         });
 
-        var historyGrid = new dhtmlXGridObject(doseForm.getContainer('gridPreviousRadiopharmaceuticals'));
+        var historyGrid = new dhtmlXGridObject(doseForm.getContainer('gridPreviousDoses'));
         historyGrid.setIconsPath(config.iconPath);
-        historyGrid.setHeader(["Date","Study Type","Radiopharmaceutical","Dispensed Activity"]);
+        historyGrid.setHeader(["PatientName","PatientID","PatientDOB","PatientSex"]);
         historyGrid.setColTypes("ro,ro,ro,ro");
 
         historyGrid.enableResizing('true,false,true,true');
@@ -592,7 +595,7 @@ var view = {
         historyGrid.attachEvent('onEditCell', function(stage,rId,cInd,nValue,oValue) {return false;});
         historyGrid.enableKeyboardSupport(false);
         historyGrid.init();
-        historyGrid.load('data/gridGenerators.php');
+        historyGrid.load('data/gridPreviousDoses.php');
 
     },
     timeDisplay : function(){
@@ -600,24 +603,26 @@ var view = {
         var items = [
             { type:"settings" , labelWidth:5, inputWidth:250,position:"absolute"},
             {
-                type: "input",
-                name: "Barcode",
-                inputWidth: 300,
-                inputLeft: 5,
-                inputTop: 10
-            },
-            {
-                type: "container",
-                name: "Date",
-                label: "Date",
+                type: "template",
+                name: "Today",
+                value: "Today",
+                format: format_a,
                 labelWidth: "auto",
                 labelLeft: 5,
-                labelTop: 40,
+                labelTop: 10
+            },
+            {
+                type: "input",
+                name: "barcode",
+                label: "Scan a barcode",
+                labelWidth: 250,
+                labelLeft: 5,
+                labelTop: 100,
                 inputLeft: 5,
-                inputTop: 50,
-                inputWidth: 750,
-                inputHeight:150
+                inputTop: 130,
+                inputWidth: 200
             }
+
         ];
 /*        var timeForm = appLayout.cells("c").attachForm();
         timeForm.setFontSize("15px");
@@ -626,9 +631,20 @@ var view = {
 
         });*/
         //appLayout.cells("c").attachHTMLString('<div id="clockbox" style="font:16pt Arial; color:#287ec7;" </div>');
-        appLayout.cells("c").attachHTMLString('<div id="clockbox" style="font:16pt Arial; color:#287ec7;" </div>');
+        //appLayout.cells("c").attachHTMLString('<div id="clockbox" style="font:16pt Arial; color:#287ec7;" </div>');
+        var barcodeForm = appLayout.cells("c").attachForm();
+        barcodeForm.setFontSize("20px");
+        barcodeForm.loadStruct(items,function() {
+            //mainForm.setItemFocus("BatchNo");
+
+        });
 
     }
 
 
 };
+function format_a(name, value) {
+    if (name == "product") return "<div class='simple_bold'>"+value+"</div>";
+    if (name == "Today") return "<div id='clockbox' style='font:16pt Arial; color:#287ec7;' </div>'";
+    if (name == "link") return "<div class='simple_link'><a href='http://"+value+"' target='blank'>"+value+"</a></div>";
+}

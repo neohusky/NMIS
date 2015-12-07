@@ -18,6 +18,7 @@ var logic = {
                 }
             });
             console.log("Barcode data received and string updated to:"+config.Barcode);
+            //barcodeForm.setItemValue("barcode","Theo");
         }
     },
     getAppSettings: function(){
@@ -88,7 +89,7 @@ var logic = {
 
         var zplurl = "labels/"+ label + ".php?id=" + id +"&copies="+copies;
         dhx.ajax().get(zplurl, function(text,xml){
-
+        console.log(zplurl);
 
         });
     }

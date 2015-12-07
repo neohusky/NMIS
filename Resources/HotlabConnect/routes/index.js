@@ -3,36 +3,15 @@ var express = require('express')
     , serial = require('../scripts/serial.js')
     , barcode = require("../scripts/barcode.js")
     , config = require('../scripts/config.js')
-    , printServer = require('../scripts/printServer.js')
     , nconf = require('nconf')
-    , multer = require('multer');
+    , os = require('os')
+    ,async = require("async")
+    ,fs = require("fs")
+    ,exec = require('child_process').exec
+    , path = require('path')
+    , appDir = path.dirname(require.main.filename);;
 
 
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './uploads'); // Absolute path. Folder must exist, will not be created for you.
-    },
-    filename: function (req, file, cb) {
-        //cb(null, file.originalname + '-' + Date.now());
-        cb(null, file.originalname);
-    }
-});
-var upload = multer({ storage: storage }).single("upl");
-
-
-
-///Upload files
-router.get('/labelupload', function(req, res, next) {
-    res.render('upload');
-});
-
-router.post('/labelupload', upload,
-    function (req, res, next) {
-        //something do my scripts.
-        console.log(req.body); //form fields
-        console.log(req.file); //form files
-        res.status(204).end();
-    });
 
 /////////////////////////
 
@@ -60,7 +39,15 @@ router.get('/status', function(req, res) {
 });
 // define the printserver route
 router.get('/printserver', function(req, res) {
-    res.render('printserver');
+    GetIP(function(data){
+            console.log(data);
+    // Print the result
+        url = 'http://' + data + ':631';
+        res.render('printserver', {
+            title: 'Print Server Page',
+            url: url
+        });
+    });
 });
 
 // define the settings route
@@ -80,24 +67,6 @@ router.get('/settings',function(req,res){
 
 });
 
-
-/*
-
-router.post('/settings', function (req, res) {
-    nconf.set('DoseCal:CommPortName', req.body.CommPortName);
-    nconf.set('DoseCal:CommPortBaud', +req.body.CommPortBaud);
-    nconf.set('WebPort', +req.body.WebPort);
-    var val = ((req.body.PrintServer) === "true");
-    nconf.set('Print:Server', val);
-    nconf.set('Print:ServerFolder', req.body.PrintServerFolder);
-
-    // If it's not showing up, just use req.body to see what is actually being passed.
-    console.log("Settings Saved. " +req.body);
-    //Save Settings to file
-    config.saveConfig();
-    //Go Back to settings
-    res.render('settings');
-});*/
 
 router.post('/settingssave', function (req, res) {
     nconf.set('DoseCal:Type', req.body.DoseCalType);
@@ -231,15 +200,7 @@ router.get('/resetcomm', function (req, res) {
     res.send('Comm has been reset');
 });
 
-/*// accept get request at /getPrinters
-router.get('/getPrinters', function (req, res) {
 
-    printServer.getPrinters(function (list) {
-        res.json(list);
-        console.log(list);
-
-    });
-});*/
 
 // accept get request at /stopcomm
 router.get('/stopcomm', function (req, res) {
@@ -278,13 +239,77 @@ router.get('/control/:isotope', function(req, res) {
 
         //res.send("Not recognised Isotope " +isotope);
 
-
-
-
-
-
     //res.send(isotope);
 });
+
+router.get('/zplprint/:barcode/:zpl/:copies?', function(req, res) {
+    var zpl = req.params.zpl;
+    var copies = req.params.copies;
+    var copiesArg;
+        if (!copies){
+            copiesArg = ""
+        } else{
+            copiesArg = ' -#'+ copies
+        }
+    var filename  = appDir + "/print/" + req.params.barcode + ".zpl";
+    //console.log(req.params.zpl);
+    res.send("received zpl: " + req.params.zpl);
+
+    async.series([
+        function(callback){
+            fs.writeFile(filename, zpl, function(err) {
+            if(err) {
+                callback(err);
+                return;
+            }
+            //console.log("The file was saved! to "+filename);
+                callback();
+            });
+        },
+        function(callback){
+            CupsPrinterName = nconf.get('Print:PrinterName');
+            //console.log(CupsPrinterName);
+            var cmd = 'lpr -P ' + CupsPrinterName + copiesArg +' -o raw ' + filename;
+                console.log(cmd);
+            exec(cmd, function(error, stdout, stderr) {
+                // command output is in stdout'
+                //console.log(cmd);
+                console.log(filename + " printed");
+                callback();
+            });
+
+        },
+        function(callback){
+            fs.unlink(filename, function (err) {
+                //console.log(filename + " deleted");
+
+            });
+            callback();
+        }
+    ]);
+
+
+
+});
+
+
+
+function GetIP(Callback){
+    var address
+        ,ifaces = os.networkInterfaces();
+    for (var dev in ifaces) {
+
+        // ... and find the one that matches the criteria
+        var iface = ifaces[dev].filter(function(details) {
+            return details.family === 'IPv4' && details.internal === false;
+        });
+
+        if(iface.length > 0) address = iface[0].address;
+    }
+    Callback(address);
+}
+
+
 
 function CreateOptionsJSON(Callback) {
     var Options = {};

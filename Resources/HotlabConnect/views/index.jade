@@ -12,9 +12,10 @@ block pageTitle
                     h2 Functions Available
                     hr
                     p
-                        b /labelupload
+                        b /zplprint/:barcodename/:zplcode/:copies
                         p
-                        | Used to upload a zpl label file for printing. HotlabConnect will receive,print and then delete the label file.
+                        | Used to upload a zpl label file for printing. HotlabConnect will receive,print and then delete the label file. The number of copies parameter is optional.
+                        | An example would be http://10.7.145.98:8080/zplprint/g1/urlencode(zplcode)/5...This would print 5 copies
                     hr
                     p
                         b /settings
@@ -45,3 +46,5 @@ block pageTitle
                         b /control/:isotope
                         p
                         | Sets the Dose calibrator Isotope.
+                        | Example....http://10.7.145.98:8080/control/Tc-99m
+
