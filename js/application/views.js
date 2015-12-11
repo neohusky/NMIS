@@ -190,6 +190,8 @@ var view = {
                     callbacks.clearDashboard();
                 } else if (generatorForm.validate()) {
                     generatorForm.save();
+                    lastID = logic.getLastAddedId("generators");
+                    logic.printLabel("generator",lastID,1);
                     callbacks.clearDashboard();
                 }
             });

@@ -54,7 +54,7 @@ var logic = {
 
         })
     },
-    zplLastAddedId: function(tble){
+/*    zplLastAddedId: function(tble){
 
         dhx.ajax().get("data/lastadded.php?id="+tble, function(text,xml){
             var id = dhx.DataDriver.json.toObject(text,xml);
@@ -69,22 +69,18 @@ var logic = {
             });
         });
         return zplURL;
-    },
-/*    getLastAddedId: function(tble){
+    },*/
+
+    getLastAddedId: function(tble){
 
         dhx.ajax().("data/lastadded.php?id="+tble, function(text,xml){
             var id = dhx.DataDriver.json.toObject(text,xml);
 
             id = id.id["0"].id;
 
-            dhtmlx.message({
-                text: "The id is:<br />"+id+" .table="+tble ,
-                expire: -1, //milliseconds. You can use negative value (-1) to make notice persistent.
-                type: "myNotice" // 'customCss' - css class
-            });
         });
         return id;
-    },*/
+    },
     printLabel: function(label,id,copies){
 
         var zplurl = "labels/"+ label + ".php?id=" + id +"&copies="+copies;
