@@ -73,12 +73,13 @@ var logic = {
 
     getLastAddedId: function(tble){
 
-        dhx.ajax().("data/lastadded.php?id="+tble, function(text,xml){
+        dhx.ajax().get("data/lastadded.php?id="+tble, function(text,xml){
             var id = dhx.DataDriver.json.toObject(text,xml);
 
             id = id.id["0"].id;
 
         });
+        console.log(id);
         return id;
     },
     printLabel: function(label,id,copies){

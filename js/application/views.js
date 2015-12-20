@@ -8,6 +8,8 @@ var view = {
         var settingsForm;
 
         var items = [
+
+
             { type: "block", id:"tab1",
                 list: [
                     { type:"fieldset", name:"data1", label:"Dicom Worklist", inputWidth:"auto",
@@ -176,7 +178,7 @@ var view = {
                 combo = generatorForm.getCombo("Supplier");
             });
             if ( id >= 0){
-                generatorForm.load("data/FormGenerators.php?id="+id);
+                generatorForm.load("data/formGenerators.php?id="+id);
             }
             // enable validation
             generatorForm.enableLiveValidation(true);
@@ -190,14 +192,27 @@ var view = {
                     callbacks.clearDashboard();
                 } else if (generatorForm.validate()) {
                     generatorForm.save();
-                    lastID = logic.getLastAddedId("generators");
-                    logic.printLabel("generator",lastID,1);
-                    callbacks.clearDashboard();
+
+
                 }
             });
             // set Data Processor
-            var dp = new dataProcessor("data/FormGenerators.php");
+            var dp = new dataProcessor("data/formGenerators.php");
             dp.init(generatorForm);
+            dp.attachEvent("onAfterUpdate", function(id, action, tid, response){
+            if (action == "inserted") {
+                console.log(tid);
+                logic.printLabel("generator",tid,1);
+                callbacks.clearDashboard();
+                }
+            //if updating a generator then this
+            if (action == "updated") {
+                //console.log(tid);
+                //Print label of updated generator
+                logic.printLabel("generator",tid,1);
+                callbacks.clearDashboard();
+            }
+            });
     },
     generatorGrid : function() {
         varTitle =
@@ -653,8 +668,8 @@ var view = {
 
     }
 
-
 };
+
 function format_a(name, value) {
     var d=new Date();
     var nday=d.getDay(),nmonth=d.getMonth(),ndate=d.getDate();
@@ -674,3 +689,15 @@ function format_a(name, value) {
     //if (name == "link") return "<div class='simple_link'><a href='http://"+value+"' target='blank'>"+value+"</a></div>";
 
 }
+
+
+LastAddedId = function(tble){
+
+    dhx.ajax().get("data/lastadded.php?id="+tble, function(text,xml){
+        var data = dhx.DataDriver.json.toObject(text,xml);
+
+        data = data.id["0"].id;
+        return data;
+    });
+
+};

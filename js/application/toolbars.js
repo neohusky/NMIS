@@ -107,7 +107,7 @@ var toolbar = {
                 case "btnDecomission": dhtmlx.alert("home:Decomission"); break;
                 case "btnWaste": dhtmlx.alert("home:Waste"); break;
                 case "btnPrintTest": logic.printLabel("generator",2,3); break;
-                //case "btnPrintBatchTest": logic.printKitBatchLabel(3); break;
+                case "btnPrintBatchTest": logic.getLastAddedId("generator"); break;
                 default: break;
             }
         });
