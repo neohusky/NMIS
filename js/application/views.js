@@ -538,7 +538,8 @@ var view = {
         });
 
     },
-    dispensePtDose : function(){
+    dispensePtDoseOld : function(){
+
 
         var items = [
             { type:"settings" , labelWidth:5, inputWidth:250,position:"absolute"},
@@ -594,6 +595,13 @@ var view = {
                 inputHeight:150
             }
         ];
+
+
+
+
+
+
+
         var doseForm = appLayout.cells("a").attachForm();
         doseForm.setFontSize("20px");
         doseForm.loadStruct(items,function() {
@@ -602,6 +610,142 @@ var view = {
         });
 
         var historyGrid = new dhtmlXGridObject(doseForm.getContainer('gridPreviousDoses'));
+        historyGrid.setIconsPath(config.iconPath);
+        historyGrid.setHeader(["PatientName","PatientID","PatientDOB","PatientSex"]);
+        historyGrid.setColTypes("ro,ro,ro,ro");
+
+        historyGrid.enableResizing('true,false,true,true');
+        historyGrid.setColSorting('date,str,str,int');
+        historyGrid.setInitWidths('60,*,*,*');
+        historyGrid.attachEvent('onEditCell', function(stage,rId,cInd,nValue,oValue) {return false;});
+        historyGrid.enableKeyboardSupport(false);
+        historyGrid.init();
+        historyGrid.load('data/gridPreviousDoses.php');
+
+    },
+    dispensePtDose : function(){
+
+        var items =  [
+            { type:"settings" , labelWidth:5, inputWidth:250,position:"absolute"},
+            { type: "block", id:"header",
+                list: [
+                    { type:"template", name:"PatientName", value:"PatientName", format: formatDispenseDoseHeader, inputWidth: 300,inputLeft: 5, inputTop: 5},
+                    { type:"template",name: "PatientID",value: "PatientID",format: formatDispenseDoseHeader,inputWidth: 100,inputLeft: 520, inputTop: 5},
+                    { type:"template",name: "DOB",value: "DOB",format: formatDispenseDoseHeader,inputWidth: 100,inputLeft: 630, inputTop: 5},
+                    { type:"template",name: "ProcedureType",value: "ProcedureType",format: formatDispenseDoseHeader,labelWidth: 250, inputLeft: 5, inputTop: 25}
+
+                    //{ type:"input", name:"LastName", inputWidth: 300, inputLeft: 5, inputTop: 20},
+                   // { type:"input", name:"FirstName", inputWidth: 200, inputLeft: 310, inputTop: 20},
+                    //{ type:"input", name:"PatientID", inputWidth: 100, inputLeft: 520, inputTop: 20},
+                    //{ type:"input", name:"DOB", inputWidth: 100, inputLeft: 630, inputTop: 20},
+                    //{ type:"input", name:"ProcedureType", label: "Procedure Type", labelWidth: 250, labelLeft: 5, labelTop: 70, inputLeft: 5, inputTop: 100},
+                ]
+            },
+            { type: "block", id:"tab1",
+                list: [
+                        { type:"container", name:"gridPreviousDoses", label:"Radiopharmaceuticals previously dispensed", labelWidth: "auto", labelLeft: 5, labelTop: 5, inputLeft: 5, inputTop: 35, inputWidth: 750, inputHeight:150}
+                ]
+            },
+            // Tab2
+            { type: "block", id:"tab2",
+                list: [
+                    { type:"fieldset", name:"data2", label:"DWL Query Parameters", inputWidth:"auto",
+                        list:[
+                            { type:"input", name:"DWL_RefreshTime", label:"Auto Refresh Time (s)", labelWidth:"250", inputWidth:"250", labelLeft:"450", labelTop:"50", inputLeft:"450", inputTop:"196"},
+                            { type:"input", name:"DWL_SearchModality", label:"Modality", labelWidth:"250", inputWidth:"250", labelLeft:"175", labelTop:"50", inputLeft:"175", inputTop:"296"}
+                        ]
+                    }
+                ]},
+
+            // Tab3
+            { type: "block", id:"tab3",
+                list: [
+                    { type:"fieldset", name:"data3", label:"Application", inputWidth:"auto"	, list:[
+                        { type:"input", name:"App_TimeOut", label:"Application Timeout (s)", labelWidth:"250", inputWidth:"250", labelLeft:"450", labelTop:"50", inputLeft:"450", inputTop:"296"},
+                        { type:"fieldset", name:"data3", label:"HotlabConnect", inputWidth:"auto"	, list:[
+                            { type:"input", name:"App_HotlabConnectServer", label:"Hotlab Connect Server", labelWidth:"250", inputWidth:"250", labelLeft:"250", labelTop:"50", inputLeft:"175", inputTop:"296"},
+                            { type:"input", name:"App_HotlabConnectPort", label:"Hotlab Connect Port", labelWidth:"250", inputWidth:"250", labelLeft:"250", labelTop:"50", inputLeft:"175", inputTop:"296"},
+                            { type: "block",width: 300,
+                                list: [
+                                    {type: "button", value: "Reboot", name: "reboot"},
+                                    {type: "newcolumn"},
+                                    {type: "button", value: "Config", name: "config"}
+                                ]
+                            }
+                        ]}
+                    ]}
+                ]
+
+            }
+        ];
+
+
+         callbacks.clearDashboard();
+        var dispenseDoseLayout = appLayout.cells("a").attachLayout({
+            parent:     "layoutObj",    // id/object, parent container where layout will be located
+            pattern:    "2E",           // string, layout's pattern
+            //skin:       "dhx_web",  // string, optional,"dhx_skyblue","dhx_web","dhx_terrace"
+
+            offsets: {          // optional, offsets for fullscreen init
+                top:    10,     // you can specify all four sides
+                right:  5,     // or only the side where you want to have an offset
+                bottom: 10,
+                left:   5
+            },
+
+            cells: [    // optional, cells configuration according to the pattern
+                // you can specify only the cells you want to configure
+                // all params are optional
+                {
+                    id:             "a",        // id of the cell you want to configure
+                    text:           "Header",     // header text
+                    collapsed_text: "Header",   // header text for a collapsed cell
+                    header:         false,      // hide header on init
+                    //width:          500,        // cell init width
+                    height:         90,        // cell init height
+                    collapse:       false,        // collapse on init
+                    fix_size:       [null,1] // fix cell's size, [width,height]
+                },
+                {
+                    id: "b",        // id of the cell you want to configure
+                    text: "Body",     // header text
+                    collapsed_text: "Body",   // header text for a collapsed cell
+                    header: false,      // hide header on init
+                   // width: 300,        // cell init width
+                    //height: 900,        // cell init height
+                    collapse: false,        // collapse on init
+                    fix_size: [null, null] // fix cell's size, [width,height]} // other cell if any
+                }
+
+
+
+            ]
+
+        });
+         var dispenseDoseTabbar = dispenseDoseLayout.cells("b").attachTabbar({
+         tabs: [
+         {id: "a1", label: "Step 1", active: true},
+         {id: "a2", label: "Step 2"},
+         {id: "a3", label: "Step 3"}
+         ]
+         });
+
+        var dispenseDoseForm = dispenseDoseTabbar.cells("a1").attachForm();
+        dispenseDoseForm.setFontSize("20px");
+        dispenseDoseForm.loadStruct(items, function(){
+            dispenseDoseLayout.cells("a").attachObject("header");
+            dispenseDoseTabbar.cells("a2").attachObject("tab2");
+            dispenseDoseTabbar.cells("a3").attachObject("tab3");
+         });
+
+        dispenseDoseForm.load("data/formSettings.php?id=1");
+         // enable validation
+        dispenseDoseForm.enableLiveValidation(true);
+
+
+
+
+        var historyGrid = new dhtmlXGridObject(dispenseDoseForm.getContainer('gridPreviousDoses'));
         historyGrid.setIconsPath(config.iconPath);
         historyGrid.setHeader(["PatientName","PatientID","PatientDOB","PatientSex"]);
         historyGrid.setColTypes("ro,ro,ro,ro");
@@ -689,7 +833,10 @@ function format_a(name, value) {
     //if (name == "link") return "<div class='simple_link'><a href='http://"+value+"' target='blank'>"+value+"</a></div>";
 
 }
-
+function formatDispenseDoseHeader(name, value) {
+    if (name == "ProcedureType") return "<div style='font:32pt Arial; color:#287ec7;'>"+value+"</div>";
+    else return "<div style='font:16pt Arial; color:#2c85d5;'>"+value+"</div>";
+}
 
 LastAddedId = function(tble){
 
