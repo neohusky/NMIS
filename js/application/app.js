@@ -122,8 +122,11 @@ dhtmlxEvent(window, "load", function(){
 
 	//Setup main window Layout
 	appLayout = new dhtmlXLayoutObject(document.body, "3L");
-	//appLayout.cells("a").setText('<h2 style="color:blue;text-align:center;vertical-align: top">This is a heading.</h2>');
 
+
+
+	//appLayout.cells("a").setText('<h2 style="color:blue;text-align:center;vertical-align: top">This is a heading.</h2>');
+	appLayout.cells("a").hideHeader();
 	appLayout.cells("b").setText('Notifications');
 	appLayout.cells("b").setWidth('250');
 	appLayout.cells("b").fixSize(1,1);

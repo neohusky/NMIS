@@ -62,7 +62,26 @@ exports.resetComm = function () {
     myPort.close();
     myPort.open();
 };
+exports.openComm = function (){
+//serialData ='~1 Tc-99m 35.1 1.293 GBq';
+//LastBarCode ='E2841 /n';
+/////////////////Set up Serial Port Functions
+    SerialPort = serialport.SerialPort;    // make a local instance of it
+    myPort = new SerialPort(nconf.get('DoseCal:CommPortName'), {
+        baudRate: nconf.get('DoseCal:CommPortBaud'),
+        //dataBits: nconf.get('DoseCal:CommPortDataBits'),
+        //stopBits:nconf.get('DoseCal:CommPortStopBits'),
+        //parity: nconf.get('DoseCal:CommPortParity'),
+        // look for return and newline at the end of each data packet:
+        parser: serialport.parsers.readline('\n')
+    });
 
+// these are the definitions for the serial events:
+    myPort.on('open', showPortOpen);
+    myPort.on('data', saveLatestData);
+    myPort.on('close', showPortClose);
+    myPort.on('error', showError);
+};
 exports.stopComm = function () {
     myPort.close();
 };

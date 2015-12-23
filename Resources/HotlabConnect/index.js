@@ -52,7 +52,7 @@ function SetupWebServer() {
 
 }
 
-Startup(tartWeb);
+Startup(StartWeb);
 
 function StartWeb() {
 

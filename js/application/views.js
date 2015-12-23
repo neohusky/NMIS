@@ -236,6 +236,111 @@ var view = {
 
 
     },
+    admin : function() {
+        /*        var risCodesLayout = appLayout.cells("a").attachLayout({
+         //parent:     "layoutObj",    // id/object, parent container where layout will be located
+         pattern:    "1C",           // string, layout's pattern
+         //skin:       "dhx_web",  // string, optional,"dhx_skyblue","dhx_web","dhx_terrace"
+
+         offsets: {          // optional, offsets for fullscreen init
+         top:    0,     // you can specify all four sides
+         right:  0,     // or only the side where you want to have an offset
+         bottom: 0,
+         left:   5
+         },
+
+         cells: [    // optional, cells configuration according to the pattern
+         // you can specify only the cells you want to configure
+         // all params are optional
+         {
+         id:             "a",        // id of the cell you want to configure
+         text:           "Body",     // header text
+         collapsed_text: "Body2 colapsed",   // header text for a collapsed cell
+         header:         false,      // hide header on init
+         //width:          500,        // cell init width
+         //height:         90,        // cell init height
+         collapse:       false,        // collapse on init
+         fix_size:       [null,null] // fix cell's size, [width,height]
+         }
+         ]
+         });*/
+        var adminSideBar = appLayout.cells("a").attachSidebar({
+            //parent:         "sidebarObj",   // id/object, container for sidebar
+            //skin:           "dhx_skyblue",  // string, sidebar skin, optional
+            template: "text",      // string, used template, "details" by default
+            //icons_path:     config.iconPath,       // string, path to the folder with icons
+            single_cell: false,           // boolean, true to enable the single cell mode
+            //bubble:         6,              // number, colored marker showing notifications count
+            width: 160,            // number, width of the left part
+            header: false,           // boolean, true to enable the header
+            autohide: false,          // boolean, true to enable autohide for navigation bar
+            //xml:            "sidebar.xml",  // string, path to xml config, optional
+            //json:           "sidebar.json", // string, path to json config, optional
+            //onload:         function(){},   // function, callback for xml/json, optional
+            items: [
+                // items config
+                {
+                    id: "a",       // item id
+                    text: "RIS codes",     // item text
+                    //icon:       "",   // icon used for the item
+                    selected: false        // boolean, true to select an item
+                },
+                {
+                    id: "b",       // item id
+                    text: "Staff",     // item text
+                    //icon:       "",   // icon used for the item
+                    selected: false        // boolean, true to select an item
+                },
+                // separator config
+                {
+                    id: "sep1",     // separator id
+                    type: "separator" // item type, mandatory
+                }
+
+            ]
+        });
+
+        appLayout.cells("a").hideHeader();
+        var risCodesToolbar = adminSideBar.cells("a").attachToolbar();
+
+        var items = [
+            {type: "button", id: "btnAddNew", text: "Add", img: "", imgdis: "", title: "Add"},
+            {type: "button", id: "btnAllToday", text: "Delete", img: "", title: "Delete"}
+        ];
+        risCodesToolbar.loadStruct(items);
+
+        risCodesToolbar.attachEvent("onClick", function (id) {
+            switch (id) {
+                case "btnWorklist":
+                    view.patientWorklist();
+                    break;
+                case "btnAllToday":
+                    dhtmlx.alert("All Today");
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        var risCodeGrid = adminSideBar.cells("a").attachGrid();
+        risCodeGrid.setStyle("", "font-size:20px","", "");
+        risCodeGrid.setImagePath(config.imagePath);
+        risCodeGrid.setHeader("id, RIScode, Show in Worklist");
+        risCodeGrid.setColTypes("ro,ed,ch");
+        risCodeGrid.setColSorting('str,str,str');
+        risCodeGrid.setInitWidths('30,400,170');
+        risCodeGrid.load("data/gridRISCodes.php");
+        risCodeGrid.init();
+
+        risCodeGrid.attachEvent("onRowDblClicked", function (rowId) {
+            console.log(rowId);
+            view.generatorEntry(parseInt(rowId));
+        });
+        risCodeGrid.attachEvent("onRowSelect", function (rowId) {
+            callbacks.setToolbarItemStates();
+        });
+    },
+
 
     patientWorklist : function(){
         appGrid =  appLayout.cells("a").attachGrid();
@@ -406,10 +511,10 @@ var view = {
             //skin:       "dhx_web",  // string, optional,"dhx_skyblue","dhx_web","dhx_terrace"
 
             offsets: {          // optional, offsets for fullscreen init
-                top:    10,     // you can specify all four sides
-                right:  10,     // or only the side where you want to have an offset
-                bottom: 10,
-                left:   10
+                top:    0,     // you can specify all four sides
+                right:  0,     // or only the side where you want to have an offset
+                bottom: 0,
+                left:   0
             },
 
             cells: [    // optional, cells configuration according to the pattern

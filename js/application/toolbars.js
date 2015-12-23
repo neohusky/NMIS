@@ -160,6 +160,10 @@ var toolbar = {
                 default: break;
             }
         });
+    },
+    admin: function () {
+        callbacks.clearDashboard();
+        view.admin();
     }
 };
 
