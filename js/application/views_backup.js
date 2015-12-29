@@ -220,7 +220,6 @@ var view = {
         appGrid = appLayout.cells("a").attachGrid();
         appGrid.setImagePath(config.imagePath);
         appGrid.setHeader("id, BatchNo, Supplier, ArrivalDate, button");
-        appGrid.setStyle("", "font-size:19px","", "");
         appGrid.setColTypes("ro,ro,ro,ro,button");
         appGrid.setColSorting('str,str,str,str,str');
         appGrid.setInitWidths('50,100,150,120,100');
@@ -238,7 +237,33 @@ var view = {
 
     },
     admin : function() {
-        //appLayout.cells("a").setText("Administration");
+        /*        var risCodesLayout = appLayout.cells("a").attachLayout({
+         //parent:     "layoutObj",    // id/object, parent container where layout will be located
+         pattern:    "1C",           // string, layout's pattern
+         //skin:       "dhx_web",  // string, optional,"dhx_skyblue","dhx_web","dhx_terrace"
+
+         offsets: {          // optional, offsets for fullscreen init
+         top:    0,     // you can specify all four sides
+         right:  0,     // or only the side where you want to have an offset
+         bottom: 0,
+         left:   5
+         },
+
+         cells: [    // optional, cells configuration according to the pattern
+         // you can specify only the cells you want to configure
+         // all params are optional
+         {
+         id:             "a",        // id of the cell you want to configure
+         text:           "Body",     // header text
+         collapsed_text: "Body2 colapsed",   // header text for a collapsed cell
+         header:         false,      // hide header on init
+         //width:          500,        // cell init width
+         //height:         90,        // cell init height
+         collapse:       false,        // collapse on init
+         fix_size:       [null,null] // fix cell's size, [width,height]
+         }
+         ]
+         });*/
         var adminSideBar = appLayout.cells("a").attachSidebar({
             //parent:         "sidebarObj",   // id/object, container for sidebar
             //skin:           "dhx_skyblue",  // string, sidebar skin, optional
@@ -480,48 +505,61 @@ var view = {
 
     },
     dashboard : function(){
+        var dashLayout = appLayout.cells("a").attachLayout({
+            parent:     "layoutObj",    // id/object, parent container where layout will be located
+            pattern:    "3U",           // string, layout's pattern
+            //skin:       "dhx_web",  // string, optional,"dhx_skyblue","dhx_web","dhx_terrace"
 
-        var dashboardSideBar = appLayout.cells("a").attachSidebar({
-            //parent:         "sidebarObj",   // id/object, container for sidebar
-            //skin:           "dhx_skyblue",  // string, sidebar skin, optional
-            template: "text",      // string, used template, "details" by default
-            //icons_path:     config.iconPath,       // string, path to the folder with icons
-            single_cell: false,           // boolean, true to enable the single cell mode
-            //bubble:         6,              // number, colored marker showing notifications count
-            width: 160,            // number, width of the left part
-            header: true,           // boolean, true to enable the header
-            autohide: true,          // boolean, true to enable autohide for navigation bar
-            //xml:            "sidebar.xml",  // string, path to xml config, optional
-            //json:           "sidebar.json", // string, path to json config, optional
-            //onload:         function(){},   // function, callback for xml/json, optional
-            items: [
-                // items config
+            offsets: {          // optional, offsets for fullscreen init
+                top:    0,     // you can specify all four sides
+                right:  0,     // or only the side where you want to have an offset
+                bottom: 0,
+                left:   0
+            },
+
+            cells: [    // optional, cells configuration according to the pattern
+                // you can specify only the cells you want to configure
+                // all params are optional
                 {
-                    id: "a",       // item id
-                    text: "Vial Display",     // item text
-                    //icon:       "",   // icon used for the item
-                    selected: true        // boolean, true to select an item
+                    id:             "a",        // id of the cell you want to configure
+                    text:           "Kits",     // header text
+                    collapsed_text: "Text 2",   // header text for a collapsed cell
+                    header:         false,      // hide header on init
+                    width:          500,        // cell init width
+                    height:         300,        // cell init height
+                    collapse:       false,        // collapse on init
+                    fix_size:       [1,1] // fix cell's size, [width,height]
                 },
                 {
-                    id: "b",       // item id
-                    text: "Staff",     // item text
-                    //icon:       "",   // icon used for the item
-                    selected: false        // boolean, true to select an item
+                    id: "b",        // id of the cell you want to configure
+                    text: "Eluates",     // header text
+                    collapsed_text: "Text 2",   // header text for a collapsed cell
+                    header: false,      // hide header on init
+                    width: 300,        // cell init width
+                    height: 300,        // cell init height
+                    collapse: false,        // collapse on init
+                    fix_size: [null, null] // fix cell's size, [width,height]} // other cell if any
                 },
-                // separator config
                 {
-                    id: "sep1",     // separator id
-                    type: "separator" // item type, mandatory
+                    id: "c",        // id of the cell you want to configure
+                    text: "Worklist",     // header text
+                    collapsed_text: "Text 2",   // header text for a collapsed cell
+                    header: false,      // hide header on init
+                    width: 1000,        // cell init width
+                    height: 300,        // cell init height
+                    collapse: false,        // collapse on init
+                    fix_size: [null, null] // fix cell's size, [width,height]} // other cell if any
                 }
 
+
+
             ]
+
         });
-        //appLayout.cells("a").setText("Dashboard");
-        appLayout.cells("a").hideHeader();
 
 
         var chartKit;
-        chartKit = dashboardSideBar.cells("a").attachChart({
+        chartKit = dashLayout.cells("a").attachChart({
 
             view:"stackedBar",
             container:"chart1",
@@ -554,7 +592,7 @@ var view = {
         });
         chartKit.load("data/chartKits.php");
 
-/*        var chartEluate;
+        var chartEluate;
         chartEluate = dashLayout.cells("b").attachChart({
 
             view:"stackedBar",
@@ -586,12 +624,10 @@ var view = {
                 template:"#percentUsed#"
             }
         });
-        chartEluate.load("data/chartEluates.php");*/
-
-
+        chartEluate.load("data/chartEluates.php");
         /////Patient Worklist on Dashboard
         var gridPatients;
-        gridPatients =  appLayout.cells("c").attachGrid();
+        gridPatients =  dashLayout.cells("c").attachGrid();
         gridPatients.setStyle("", "font-size:19px","", "");
 
         gridPatients.setHeader("Name, Patient ID, DOB, Sex, Procedure");
@@ -873,30 +909,9 @@ var view = {
 
         }
 
-    },
-    timeDisplay : function(){
-        var tday=new Array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday");
-        var tmonth=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
-        var d=new Date();
-        var nday=d.getDay(),nmonth=d.getMonth(),ndate=d.getDate();
-        var nhour=d.getHours(),nmin=d.getMinutes(),ap,nsec= d.getSeconds();
-        if(nhour==0){ap=" AM";nhour=12;}
-        else if(nhour<12){ap=" AM";}
-        else if(nhour==12){ap=" PM";}
-        else if(nhour>12){ap=" PM";nhour-=12;}
-
-        if(nmin<=9) nmin="0"+nmin;
-        if(nsec<=9) nsec="0"+nsec;
-
-        //if (name == "Date2") return "<div class='simple_bold'>"+value+"</div>";
- //"<div style='font:31pt Arial; color:#287ec7;'>"+nhour+":"+nmin+":"+nsec+ap+"</div>";
-
-        //document.getElementById("status_txt").textContent = "Initializing.........";
-        document.getElementById("date_txt").textContent = tday[nday]+", "+tmonth[nmonth]+" "+ndate+ " "+nhour+":"+nmin+":"+nsec+ap;
     }
+
 };
-
-
 
 function format_a(name, value) {
 

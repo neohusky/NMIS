@@ -121,21 +121,72 @@ dhtmlxEvent(window, "load", function(){
 
 
 	//Setup main window Layout
-	appLayout = new dhtmlXLayoutObject(document.body, "3L");
+	appLayout = new dhtmlXLayoutObject({
+		parent: document.body,    // id or object for parent container
+		pattern: "3U",             // layout's pattern
+		//skin: "dhx_skyblue"     // optional, layout's skin
+		offsets: {
+			top: 10,
+			right: 0,
+			bottom: 0,
+			left: 0
+		},
+		cells: [    // optional, cells configuration according to the pattern
+			// you can specify only the cells you want to configure
+			// all params are optional
+			{
+				id:             "a",        // id of the cell you want to configure
+				text:           "Main",     // header text
+				//collapsed_text: "",   // header text for a collapsed cell
+				header:         false     // hide header on init
+				//width:          500,        // cell init width
+				//height:         300,        // cell init height
+				//collapse:       false,        // collapse on init
+				//fix_size:       [1,1] // fix cell's size, [width,height]
+			},
+			{
+				id: "b",        // id of the cell you want to configure
+				text: "Notifications",     // header text
+				collapsed_text: "Notifications",   // header text for a collapsed cell
+				header: true,      // hide header on init
+				width: 250,        // cell init width
+				//height: 300,        // cell init height
+				collapse: false,        // collapse on init
+				fix_size: [1, null] // fix cell's size, [width,height]} // other cell if any
+			},
+			{
+				id: "c",        // id of the cell you want to configure
+				text: "",     // header text
+				collapsed_text: "",   // header text for a collapsed cell
+				header: false,      // hide header on init
+				//width: 250,        // cell init width
+				height: 300,        // cell init height
+				collapse: false,        // collapse on init
+				fix_size: [null, 1] // fix cell's size, [width,height]} // other cell if any
+			}
+		]
+	});
+
+	//appLayout = new dhtmlXLayoutObject(document.body, "3L");
 
 
 
 	//appLayout.cells("a").setText('<h2 style="color:blue;text-align:center;vertical-align: top">This is a heading.</h2>');
-	appLayout.cells("a").hideHeader();
-	appLayout.cells("b").setText('Notifications');
-	appLayout.cells("b").setWidth('250');
-	appLayout.cells("b").fixSize(1,1);
+	//appLayout.cells("a").hideHeader();
+	//appLayout.cells("b").setText('Notifications');
+	//appLayout.cells("b").setWidth('250');
+	//appLayout.cells("b").fixSize(1,1);
 
-	appLayout.cells("c").setText('Barcode');
-	appLayout.cells("c").setHeight('300');
-	appLayout.cells("c").setWidth('250');
+	//appLayout.cells("c").setText('Barcode');
+	//appLayout.cells("c").setHeight('300');
+	//appLayout.cells("c").setWidth('250');
 	statusBar = appLayout.attachStatusBar();
-	view.barCodeDisplay();
+
+	statusBar.setText("<div><span id='status_txt' style='max-width: 300px; position:relative;left:0;top:0'> Welcome "+config.StaffName+"</span><span id='date_txt' style='font:12pt Arial; color:#2c85d5;float:right; max-width: 400px; position:relative;top:0;'>date</span></div>");
+
+
+
+	//view.barCodeDisplay();
 	toolbar.main();
 	toolbar.home();
 
@@ -151,7 +202,7 @@ dhtmlxEvent(window, "load", function(){
 
 	//Setup Clock and timer
 	//GetClock();
-	setInterval(view.barCodeDisplay,1000);
+	setInterval(view.timeDisplay,1000);
 });
 
 
@@ -159,20 +210,6 @@ dhtmlxEvent(window, "load", function(){
 var tday=new Array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday");
 var tmonth=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
 
-function GetClock(){
-	var d=new Date();
-	var nday=d.getDay(),nmonth=d.getMonth(),ndate=d.getDate();
-	var nhour=d.getHours(),nmin=d.getMinutes(),ap;
-	if(nhour==0){ap=" AM";nhour=12;}
-	else if(nhour<12){ap=" AM";}
-	else if(nhour==12){ap=" PM";}
-	else if(nhour>12){ap=" PM";nhour-=12;}
-
-	if(nmin<=9) nmin="0"+nmin;
-
-	//document.getElementById('clockbox').innerHTML=""+tday[nday]+", "+tmonth[nmonth]+" "+ndate+" <br> <br> "+nhour+":"+nmin+ap+"";
-
-}
 
 
 /*
