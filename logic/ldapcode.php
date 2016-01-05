@@ -1,6 +1,6 @@
-/*
+
 <?php
-include('./logic/ad.php');
+//include('/ad.php');
 
 
 session_start(); // Starting Session
@@ -27,5 +27,3 @@ if ($login) {
      // login failed, boo :(
      $error = "Username or Password is invalid";
 }
-
-?>*/

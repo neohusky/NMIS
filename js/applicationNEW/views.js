@@ -6,6 +6,7 @@ var view;
 view = {
 
     dashboard: function () {
+
         homeLayout = mainSidebar.cells("home").attachLayout({
             pattern: "3U",             // layout's pattern
             skin: "dhx_web",     // optional, layout's skin
@@ -184,7 +185,7 @@ view = {
         });
 
 
-        appLayout.cells("a").attachToolbar();
+        //appLayout.cells("a").attachToolbar();
         appGrid = homeLayout.cells("a").attachGrid();
         appGrid.setImagePath(config.imagePath);
         appGrid.setHeader("id, BatchNo, Supplier, ArrivalDate, button");

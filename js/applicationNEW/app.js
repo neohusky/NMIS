@@ -119,7 +119,7 @@ var appForm;
 var generatorForm;
 var statusBar;
 var homeLayout;
-var mainSidebar;
+//var mainSidebar;
 
 dhtmlxEvent(window, "load", function(){
 
