@@ -1,6 +1,7 @@
 /**
  * Created by theokitsos on 28/12/2015.
  */
+var mainSidebar;
 var mySidebars = {};
 var mySidebarItems = {
     recent: [
@@ -68,6 +69,9 @@ var sidebar = {
                     break;
                 case "generators":
                     view.generators();
+                    break;
+                case "kits":
+                    view.kits();
                     break;
                 case "admin":
                     this.cells(id).attachHTMLString("<div style='font-family: Tahoma,Helvetica; font-size: 11px; padding: 6px 10px; text-align: center;'>"+this.cells(id).getText().text+"</div>");

@@ -3,6 +3,175 @@
  */
 var combo;
 var view;
+var formItems = {
+
+    generator: [
+        {type: "settings", position: "label-left", labelWidth: "250", inputWidth: "260"},
+        {type: "fieldset", name: "data", label: "Generator Entry", inputWidth: "auto",
+            list: [
+
+                {type: "input", name: "id", label: "id", tooltip: "id", required: "false", hidden: "true"},
+                {
+                    type: "input",
+                    name: "BatchNo",
+                    label: "Batch No",
+                    tooltip: "Supplier Batch Number",
+                    required: "true",
+                    validate: "NotEmpty",
+                    hidden: "false"
+                },
+                {
+                    type: "combo",
+                    name: "Supplier",
+                    label: "Supplier",
+                    value: "",
+                    tooltip: "Supplier Name",
+                    required: "true",
+                    validate: "NotEmpty",
+                    filtering: "true",
+                    connector: "data/lstSuppliers.php"
+                },
+                {
+                    type: "calendar",
+                    name: "ArrivalDate",
+                    label: "ArrivalDate",
+                    value: "",
+                    dateFormat: "%Y-%m-%d %H:%i:%s",
+                    enableTime: "true",
+                    calendarPosition: "right",
+                    tooltip: "Arrival Date",
+                    required: "true",
+                    validate: "NotEmpty",
+                    hidden: "false"
+                },
+                {
+                    type: "input",
+                    name: "Username",
+                    label: "StaffID",
+                    tooltip: "Username",
+                    required: "true",
+                    validate: "NotEmpty",
+                    hidden: "false"
+                }
+            ]},
+        // buttons
+        {type: "block", id: "buttons", width: 300,
+            list: [
+                {type: "button", value: "Save", name: "save"},
+                {type: "newcolumn"},
+                {type: "button", value: "Cancel", name: "cancel"}
+            ]
+        }
+    ],
+    kit: [
+        {
+            type: "block", id: "tab1",
+            list: [
+                {
+                    type: "fieldset", name: "data1", label: "Dicom Worklist", inputWidth: "auto",
+                    list: [
+                        { type: "input", name: "supplier_name", label: "Supplier", labelWidth: "250", inputWidth: "250", labelLeft: "175", labelTop: "50", inputLeft: "175", inputTop: "121"},
+                        { type: "input", name: "trade_name", label: "Trade name", labelWidth: "250", inputWidth: "250", labelLeft: "175", labelTop: "50", inputLeft: "175", inputTop: "171"},
+                        { type: "input", name: "abbreviation", label: "Abbreviation", labelWidth: "250", inputWidth: "250", labelLeft: "175", labelTop: "50", inputLeft: "175", inputTop: "71"},
+                        { type: "input", name: "radiopharmaceutical", label: "Radiopharmaceutical", labelWidth: "250", inputWidth: "250", labelLeft: "175", labelTop: "50", inputLeft: "450", inputTop: "71"},
+                        { type: "input", name: "recon_isotope", label: "Recon Isotope", labelWidth: "250", inputWidth: "250", labelLeft: "450", labelTop: "50", inputLeft: "450", inputTop: "121"},
+                        { type: "checkbox", name: "qc_required", label: "Requires QC Pass", labelWidth: "250", labelLeft: "450", labelTop: "50"},
+                        { type: "checkbox", name: "recon_required", label: "Requires reconstitution", labelWidth: "250", inputWidth: "250", labelLeft: "450", labelTop: "50"}
+                    ]
+                }
+            ]
+        },
+                // Tab2
+        {
+            type: "block", id: "tab2",
+                list: [
+                    { type: "fieldset", name: "data2", label: "Kit Properties", inputWidth: "auto",
+                        list: [
+                            { type: "input", name: "kit_size", label: "Kit size (mg)", labelWidth: "250", inputWidth: "250", labelLeft: "450", labelTop: "50", inputLeft: "450", inputTop: "196"},
+                            { type: "input", name: "manufacture_comments", label: "Manufacturer comments", rows:4, labelWidth: "250", inputWidth: "250", labelLeft: "175", labelTop: "50", inputLeft: "175", inputTop: "296"}
+                        ]
+                    },
+                    { type: "fieldset", name: "data3", label: "Recon Parameters", inputWidth: "auto",
+                        list: [
+                            { type: "input", name: "kit_size", label: "Kit size (mg)", labelWidth: "250", inputWidth: "250", labelLeft: "450", labelTop: "50", inputLeft: "450", inputTop: "196"},
+                            { type: "input", name: "manufacture_comments", label: "Manufacturer comments", labelWidth: "250", inputWidth: "250", labelLeft: "175", labelTop: "50", inputLeft: "175", inputTop: "296"},
+                        ]
+                    }
+                ]
+         },
+
+// buttons
+        {
+            type: "block", id: "buttons", width: 300,
+            list: [
+                {type: "button", value: "Save", name: "save"},
+                {type: "newcolumn"},
+                {type: "button", value: "Cancel", name: "cancel"}
+            ]
+        }
+    ],
+
+    admin: [
+        {id: "setting1", text: "setting1", icon: "disk_c.png"},
+        {id: "setting2", text: "setting2", icon: "disk_d.png"},
+        {id: "setting3", text: "setting3", icon: "disk_e.png"}
+    ],
+    settings:  [
+
+
+        { type: "block", id:"tab1",
+            list: [
+                { type:"fieldset", name:"data1", label:"Dicom Worklist", inputWidth:"auto",
+                    list:[
+                        { type:"input", name:"DWL_ServerAET", label:"Server AET", labelWidth:"250", inputWidth:"250", labelLeft:"175", labelTop:"50", inputLeft:"175", inputTop:"121"},
+                        { type:"input", name:"DWL_ServerIP", label:"Server IP Address", labelWidth:"250", inputWidth:"250", labelLeft:"175", labelTop:"50", inputLeft:"175", inputTop:"171"},
+                        { type:"input", name:"DWL_ServerPort", label:"Server AET", labelWidth:"250", inputWidth:"250", labelLeft:"175", labelTop:"50", inputLeft:"175", inputTop:"71"},
+                        { type:"input", name:"DWL_OwnAET", label:"NMIS AET", labelWidth:"250", inputWidth:"250", labelLeft:"175", labelTop:"50", inputLeft:"450", inputTop:"71"},
+                        { type:"input", name:"DWL_OwnIP", label:"NMIS IP Address", labelWidth:"250", inputWidth:"250", labelLeft:"450", labelTop:"50", inputLeft:"450", inputTop:"121"}
+                    ]
+                }
+            ]},
+        // Tab2
+        { type: "block", id:"tab2",
+            list: [
+                { type:"fieldset", name:"data2", label:"DWL Query Parameters", inputWidth:"auto",
+                    list:[
+                        { type:"input", name:"DWL_RefreshTime", label:"Auto Refresh Time (s)", labelWidth:"250", inputWidth:"250", labelLeft:"450", labelTop:"50", inputLeft:"450", inputTop:"196"},
+                        { type:"input", name:"DWL_SearchModality", label:"Modality", labelWidth:"250", inputWidth:"250", labelLeft:"175", labelTop:"50", inputLeft:"175", inputTop:"296"}
+                    ]
+                }
+            ]},
+
+        // Tab3
+        { type: "block", id:"tab3",
+            list: [
+                { type:"fieldset", name:"data3", label:"Application", inputWidth:"auto"	, list:[
+                    { type:"input", name:"App_TimeOut", label:"Application Timeout (s)", labelWidth:"250", inputWidth:"250", labelLeft:"450", labelTop:"50", inputLeft:"450", inputTop:"296"},
+                    { type:"fieldset", name:"data3", label:"HotlabConnect", inputWidth:"auto"	, list:[
+                        { type:"input", name:"App_HotlabConnectServer", label:"Hotlab Connect Server", labelWidth:"250", inputWidth:"250", labelLeft:"250", labelTop:"50", inputLeft:"175", inputTop:"296"},
+                        { type:"input", name:"App_HotlabConnectPort", label:"Hotlab Connect Port", labelWidth:"250", inputWidth:"250", labelLeft:"250", labelTop:"50", inputLeft:"175", inputTop:"296"},
+                        { type: "block",width: 300,
+                            list: [
+                                {type: "button", value: "Reboot", name: "reboot"},
+                                {type: "newcolumn"},
+                                {type: "button", value: "Config", name: "config"}
+                            ]
+                        }
+                    ]}
+                ]}
+            ]
+
+        },
+        // buttons
+        { type: "block", id:"buttons", width: 300,
+            list: [
+                {type: "button", value: "Save", name: "save"},
+                {type: "newcolumn"},
+                {type: "button", value: "Cancel", name: "cancel"}
+            ]
+        }
+    ],
+};
 view = {
 
     dashboard: function () {
@@ -205,6 +374,72 @@ view = {
          });*/
 
     },
+    generatorEntry: function (id) {
+        var formLayout = homeLayout.cells("a").attachLayout({
+            pattern: "1C",             // layout's pattern
+            skin: "dhx_web",     // optional, layout's skin
+            offsets: {top: 0, right: 0, bottom: 0, left: 0},
+            cells: [
+                {
+                    id: "a",
+                    text: "Main",
+                    collapsed_text: "",
+                    header: false,
+                    width: 0,
+                    height: 0,
+                    collapse: false,
+                    fix_size: [null, null]
+                }
+            ]
+        });
+
+
+        generatorForm = formLayout.cells("a").attachForm();
+        generatorForm.setFontSize("20px");
+        generatorForm.loadStruct(formItems.generator,function() {
+            //mainForm.setItemFocus("BatchNo");
+            generatorForm.setItemValue("ArrivalDate",callbacks.getDateTime());
+            generatorForm.setItemValue("Username",config.UserName);
+            combo = generatorForm.getCombo("Supplier");
+        });
+        if ( id >= 0){
+            generatorForm.load("data/formGenerators.php?id="+id);
+        }
+        // enable validation
+        generatorForm.enableLiveValidation(true);
+
+
+        // set event
+        // save or cancel
+        generatorForm.attachEvent("onButtonClick", function (btnName) {
+            // save or cancel
+            if (btnName == "cancel") {
+                mainSidebar.cells("home").setActive(true);
+            } else if (generatorForm.validate()) {
+                generatorForm.save();
+
+
+            }
+        });
+        // set Data Processor
+        var dp = new dataProcessor("data/formGenerators.php");
+        dp.init(generatorForm);
+        dp.attachEvent("onAfterUpdate", function(id, action, tid, response){
+            if (action == "inserted") {
+                console.log(tid);
+                logic.printLabel("generator",tid,1);
+                logic.logger("Generator Added","Added generator wth id:"+tid);
+                mainSidebar.cells("home").setActive(true);
+            }
+            //if updating a generator then this
+            if (action == "updated") {
+                //console.log(tid);
+                //Print label of updated generator
+                logic.printLabel("generator",tid,1);
+                callbacks.goHome();
+            }
+        });
+    },
 
     generatorInventory: function () {
         var genLayout = homeLayout.cells("a").attachLayout({
@@ -248,72 +483,11 @@ view = {
         appGrid.load("data/gridGenerators.php");
         appGrid.init();
 
-        var items = [
-            {type: "settings", position: "label-left", labelWidth: "250", inputWidth: "260"},
-            {
-                type: "fieldset", name: "data", label: "Generator Entry", inputWidth: "auto",
-                list: [
-
-                    {type: "input", name: "id", label: "id", tooltip: "id", required: "false", hidden: "true"},
-                    {
-                        type: "input",
-                        name: "BatchNo",
-                        label: "Batch No",
-                        tooltip: "Supplier Batch Number",
-                        required: "true",
-                        validate: "NotEmpty",
-                        hidden: "false"
-                    },
-                    {
-                        type: "combo",
-                        name: "Supplier",
-                        label: "Supplier",
-                        value: "",
-                        tooltip: "Supplier Name",
-                        required: "true",
-                        validate: "NotEmpty",
-                        filtering: "true",
-                        connector: "data/lstSuppliers.php"
-                    },
-                    {
-                        type: "calendar",
-                        name: "ArrivalDate",
-                        label: "ArrivalDate",
-                        value: "",
-                        dateFormat: "%Y-%m-%d %H:%i:%s",
-                        enableTime: "true",
-                        calendarPosition: "right",
-                        tooltip: "Arrival Date",
-                        required: "true",
-                        validate: "NotEmpty",
-                        hidden: "false"
-                    },
-                    {
-                        type: "input",
-                        name: "Username",
-                        label: "StaffID",
-                        tooltip: "Username",
-                        required: "true",
-                        validate: "NotEmpty",
-                        hidden: "false"
-                    }
-                ]
-            },
-            // buttons
-            {
-                type: "block", id: "buttons", width: 300,
-                list: [
-                    {type: "button", value: "Save", name: "save"},
-                    {type: "newcolumn"},
-                    {type: "button", value: "Cancel", name: "cancel"}
-                ]
-            }
-        ];
         //callbacks.clearDashboard();
         appForm = genLayout.cells("b").attachForm();
         //generatorForm = appLayout.cells("a").attachForm();
         appForm.setFontSize("20px");
-        appForm.loadStruct(items, function () {
+        appForm.loadStruct(formItems.generator, function () {
             //mainForm.setItemFocus("BatchNo");
             //appForm.setItemValue("ArrivalDate",callbacks.getDateTime());
             //appForm.setItemValue("Username",config.UserName);
@@ -359,11 +533,130 @@ view = {
         });
 
     },
+    kits: function () {
+        homeLayout = mainSidebar.cells("kits").attachLayout({
+            pattern: "1C",             // layout's pattern
+            skin: "dhx_web",     // optional, layout's skin
+            offsets: {top: 0, right: 0, bottom: 0, left: 0},
+            cells: [
+                {
+                    id: "a",
+                    text: "Main",
+                    collapsed_text: "",
+                    header: false,
+                    width: 500,
+                    height: 300,
+                    collapse: false,
+                    fix_size: [null, null]
+                }
+                //{ id: "b", text: "Notifications", collapsed_text: "", header:true, width: 250,height: 0, collapse: false,fix_size:[1,null]},
+                //{ id: "c", text: "Worklist", collapsed_text: "", header:true, width: 0,height: 300, collapse: false,fix_size:[null,1]}
+            ]
+        });
+
+        appToolbar = homeLayout.cells("a").attachToolbar();
+
+        appToolbar.loadStruct(toolbarItems.kits);
+
+        appToolbar.attachEvent("onClick", function (id) {
+            switch (id) {
+                case "btnAddNew":
+                    view.kitEntry();
+                    break;
+                case "btnInventory":
+                    view.kitInventory();
+                    callbacks.setToolbarItemStates();
+                    break;
+                case "btnEdit":
+                    view.kitEntry(parseInt(appGrid.getSelectedRowId()));
+                    break;
+                case "btnReprint":
+                    logic.printLabel("generator", parseInt(appGrid.getSelectedRowId()), 1);
+                    console.log(parseInt(appGrid.getSelectedRowId));
+                    break;
+                default:
+                    break;
+            }
+        });
+
+
+    },
+    kitEntry: function (id) {
+        var formLayout = homeLayout.cells("a").attachLayout({
+            pattern: "1C",             // layout's pattern
+            skin: "dhx_web",     // optional, layout's skin
+            offsets: {top: 0, right: 0, bottom: 0, left: 0},
+            cells: [
+                {
+                    id: "a",
+                    text: "Main",
+                    collapsed_text: "",
+                    header: false,
+                    width: 0,
+                    height: 0,
+                    collapse: false,
+                    fix_size: [null, null]
+                }
+            ]
+        });
+
+        var kitsTabbar = homeLayout.cells("a").attachTabbar({
+            tabs: [
+                {id: "a1", label: "Tab 1", active: true},
+                {id: "a2", label: "Tab 2"},
+                {id: "a2", label: "Tab 3"}
+            ]
+        });
+
+
+        var kitForm = kitsTabbar.cells("a1").attachForm();
+        kitForm.setFontSize("20px");
+        kitForm.loadStruct(formItems.kit, function(){
+            kitsTabbar.cells("a2").attachObject("tab2");
+            kitsTabbar.cells("a3").attachObject("tab3");
+        });
+        if ( id >= 0){
+            kitForm.load("data/formGenerators.php?id="+id);
+        }
+        // enable validation
+        kitForm.enableLiveValidation(true);
+
+
+        // set event
+        // save or cancel
+        kitForm.attachEvent("onButtonClick", function (btnName) {
+            // save or cancel
+            if (btnName == "cancel") {
+                mainSidebar.cells("home").setActive(true);
+            } else if (generatorForm.validate()) {
+                kitForm.save();
+
+
+            }
+        });
+        // set Data Processor
+        var dp = new dataProcessor("data/formGenerators.php");
+        dp.init(kitForm);
+        dp.attachEvent("onAfterUpdate", function(id, action, tid, response){
+            if (action == "inserted") {
+                console.log(tid);
+                logic.printLabel("generator",tid,1);
+                logic.logger("Generator Added","Added generator wth id:"+tid);
+                mainSidebar.cells("home").setActive(true);
+            }
+            //if updating a generator then this
+            if (action == "updated") {
+                //console.log(tid);
+                //Print label of updated generator
+                logic.printLabel("generator",tid,1);
+            }
+        });
+    },
 
 
     timeDisplay: function () {
-        var tday = new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
-        var tmonth = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+        var tday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        var tmonth = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         var d = new Date();
         var nday = d.getDay(), nmonth = d.getMonth(), ndate = d.getDate();
         var nhour = d.getHours(), nmin = d.getMinutes(), ap, nsec = d.getSeconds();

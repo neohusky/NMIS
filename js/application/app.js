@@ -117,6 +117,7 @@ var appGrid;
 var generatorForm;
 var barcodeForm;
 var statusBar;
+
 dhtmlxEvent(window, "load", function(){
 
 

@@ -37,6 +37,18 @@ var toolbarItems = {
     doses: [
         {type: "button", id: "btnDispense", text: "Dispense", img: "", imgdis: "", title: "Worklist"}
     ],
+    kits: [
+        {type: "button", id: "btnAddNew", text: "AddNew", img: "plus.png", imgdis: "", title: "Add New"},
+        {type: "separator", id: "sep01"},
+        {type: "button", id: "btnDecommission", text: "Decommission", img: "", title: "Decommission"},
+        {type: "separator", id: "sep02"},
+        {type: "button", id: "btnInventory", text: "Inventory", img: "", title: "Inventory"},
+        {type: "separator", id: "sep03"},
+        {type: "button", id: "btnEdit", text: "Edit", img: "", title: "Edit", enabled:"false"},
+        {type: "separator", id: "sep04", hidden: "true", enabled:"false"},
+        {type: "button", id: "btnReprint", text: "Reprint", img: "", title: "Reprint", enabled:"false"},
+        {type: "separator", id: "sep05", hidden: "true", enabled:"false"}
+    ],
     admin: [
         {type: "button", id: "btnDispense", text: "Dispense", img: "", imgdis: "", title: "Worklist"}
     ]

@@ -90,6 +90,22 @@ var logic = {
 
         });
     },
+    logger: function(action,description) {
+        var text = "Action:"+ action + ". <br />Description" +description;
+        var url = "data/updateLog.php?username="+config.UserName+"&action="+action+"&description="+description;
+        dhx.ajax().get(url, function(text,xml){
+
+            console.log(text);
+        });
+
+
+
+        dhtmlx.message({
+            text: text,
+            expire: 6000, //milliseconds. You can use negative value (-1) to make notice persistent.
+            type: "myNotice" // 'customCss' - css class
+        });
+    },
     barCodeReader: function(value){
         switch (value) {
             case config.BarcodeScanned:
