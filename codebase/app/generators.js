@@ -36,7 +36,7 @@ function generatorsInit(cell) {
     });
         generatorsToolbar.attachEvent("onClick", function (id) {
             if (id == "btnAddNew") generatorsFillForm();
-            if (id == "btnDecommission") contactsInit(cell);
+            if (id == "btnDecommission") generatorsDecommission();
             if (id == "btnInventory") generatorsInventory();
             if (id == "btnEdit") generatorsFillForm(generatorsGrid.getSelectedRowId());
             if (id == "btnReprint") contactsInit(cell);
@@ -46,23 +46,29 @@ function generatorsInit(cell) {
 }
 
 function generatorsInventory(id){
+
+    //clear the workspace
+    generatorsClearCanvas();
     // attach grid
     generatorsGrid = generatorsLayout.cells("a").attachGrid();
     generatorsGrid.setImagePath(A.imagePath);
-    generatorsGrid.setStyle("", "font-size:20px","", "");
-    generatorsGrid.setHeader("id, BatchNo, Supplier, ArrivalDate, Username");
-    generatorsGrid.attachHeader("&nbsp;,#text_filter,#combo_filter,&nbsp;,#select_filter");
-    generatorsGrid.setColumnIds("id,BatchNo,Supplier,ArrivalDate,Username");         //sets the columns' ids
+    generatorsGrid.setStyle("", "font-size:20px","", "","","");
+    generatorsGrid.setHeader("id, BatchNo, Supplier, Arrival, Arrival User, Decommission, Decommission User");
+    generatorsGrid.attachHeader("&nbsp;,#text_filter,#combo_filter,&nbsp;,#select_filter,&nbsp;,#select_filter");
+    generatorsGrid.setColumnIds("generator_id,batch_number,supplier_name,arrival_date,arrival_username,decommission_date,decommission_username");         //sets the columns' ids
     generatorsGrid.setDateFormat("%Y-%m-%d %H:%i:%s");
-    generatorsGrid.setColTypes("ro,ro,ro,dhxCalendar,ro");
-    generatorsGrid.setColSorting('str,str,str,date,str');
-    generatorsGrid.setInitWidths('100,120,220,120,150');
+    generatorsGrid.setColTypes("ro,ro,ro,dhxCalendar,ro,dhxCalendar,ro");
+    generatorsGrid.setColSorting('int,str,str,date,str,date,str');
+
+    generatorsGrid.setInitWidths('100,120,220,200,150,200,150');
     generatorsGrid.load("data/gridGenerators.php",function(){
+        generatorsGrid.sortRows(0,"int","des");
         //select previously edited row
         if ( id >= 0){
             generatorsGrid.setSelectedRow(id);
         }
     });
+    generatorsGrid.sortRows(0,"int","des");
     generatorsGrid.init();
 
 
@@ -82,30 +88,106 @@ function generatorsInventory(id){
 
 
 }
+function generatorsClearCanvas(){
+    if (generatorsLayout.cells("a").getAttachedObject() != null){
+        generatorsLayout.cells("a").detachObject()
+    }
+
+}
+function generatorsDecommission() {
+    var formbarcode;
+    var items = [
+        {type: "settings", position: "label-left", labelWidth: 130, inputWidth: 260},
+        {type: "container",     name: "gridActiveGenerators",       hidden: "false", inputWidth: 950,inputHeight:300,offsetTop: 40},
+        {type: "input",     name: "barcode",        label: "Barcode",      tooltip: "barcode", validate: "NotEmpty", hidden: "false",offsetTop: 40},
+        {type: "calendar",  name: "decommission_date",    label: "Decommission Date",   dateFormat: "%Y-%m-%d %H:%i:%s", enableTime: "true", calendarPosition: "right", tooltip: "Arrival Date", required: "true", validate: "NotEmpty", hidden: "false"},
+        {type: "input",     name: "decommission_username",       label: "Username",       tooltip: "Username", required: "true", validate: "NotEmpty", hidden: "false"},
+        { type: "block", id: "buttons", width: 300,
+            list: [
+                {type: "button", value: "Decommission", name: "Decommission"},
+                {type: "newcolumn"},
+                {type: "button", value: "Cancel", name: "cancel"}
+            ]}
+    ];
+    //clear the workspace
+    generatorsClearCanvas();
+    //attach form
+    generatorsForm = generatorsLayout.cells("a").attachForm();
+    generatorsForm.setFontSize("20px");
+    generatorsForm.loadStruct(items,function() {
+        generatorsForm.setItemFocus("batch_number");
+        generatorsForm.setItemValue("decommission_date",logic.getDateTime());
+        generatorsForm.setItemValue("decommission_username", A.UserName);
+    });
+
+    generatorsGrid = new dhtmlXGridObject(generatorsForm.getContainer('gridActiveGenerators'));
+    generatorsGrid.setImagePath(A.imagePath);
+    generatorsGrid.setStyle("", "font-size:20px","", "","","");
+    generatorsGrid.setHeader("id, BatchNo, Supplier, Arrival, Arrival User, Decommission");
+    generatorsGrid.attachHeader("&nbsp;,#text_filter,#combo_filter,&nbsp;,#select_filter,&nbsp;");
+    generatorsGrid.setColumnIds("generator_id,batch_number,supplier_name,arrival_date,arrival_username,decommission_date");         //sets the columns' ids
+    generatorsGrid.setDateFormat("%Y-%m-%d %H:%i:%s");
+    generatorsGrid.setColTypes("ro,ro,ro,ro,ro,ro");
+    generatorsGrid.setColSorting('int,str,str,date,str,date');
+
+    generatorsGrid.setInitWidths('100,120,220,200,150,200');
+    generatorsGrid.load("data/gridGeneratorsActive.php",function(){
+        generatorsGrid.sortRows(3,"date","des");
+
+    });
+
+    generatorsGrid.init();
+
+    // set event
+    // Decommission or cancel
+    generatorsForm.attachEvent("onButtonClick", function (btnName) {
+        // save or cancel
+        formbarcode = generatorsForm.getItemValue("barcode");
+        if (btnName == "cancel") {
+            generatorsForm.unload();
+        } else if (!formbarcode) {
+            dhtmlx.alert("Please scan a barcode")
+        } else if (generatorsGrid.isItemExists(formbarcode) == true) {
+            //message-related initialization
+            dhtmlx.confirm({
+                title: "Close",
+                type:"confirm-warning",
+                text: "Are you sure you want to do it?",
+                callback: function() {dhtmlx.message("User Pressed Yes");}
+            });
+        } else dhtmlx.alert("Please scan a valid generator")
+    });
+}
+
+
 
 function generatorsFillForm(id){
 
     var items = [
         {type: "settings", position: "label-left", labelWidth: 130, inputWidth: 260},
-        {type: "input",     name: "id",             label: "id",            tooltip: "id",  required: "false", hidden: "true", offsetTop: 40},
-        {type: "input",     name: "BatchNo",        label: "Batch No",      tooltip: "Supplier Batch Number", required: "true", validate: "NotEmpty", hidden: "false"},
-        {type: "combo",     name: "Supplier",       label: "Supplier",      tooltip: "Supplier Name", required: "true", validate: "NotEmpty", filtering: "true", connector: "data/lstSuppliers.php"},
-        {type: "calendar",  name: "ArrivalDate",    label: "ArrivalDate",   dateFormat: "%Y-%m-%d %H:%i:%s", enableTime: "true", calendarPosition: "right", tooltip: "Arrival Date", required: "true", validate: "NotEmpty", hidden: "false"},
-        {type: "input",     name: "Username",       label: "StaffID",       tooltip: "Username", required: "true", validate: "NotEmpty", hidden: "false"},
+        {type: "input",     name: "generator_id",       label: "id",            tooltip: "id",  required: "false", hidden: "true", offsetTop: 40},
+        {type: "input",     name: "batch_number",       label: "Batch No",      tooltip: "Supplier Batch Number", required: "true", validate: "NotEmpty", hidden: "false"},
+        {type: "combo",     name: "supplier_name",      label: "Supplier",      tooltip: "Supplier Name", required: "true", validate: "NotEmpty", filtering: "true", connector: "data/lstSuppliers.php"},
+        {type: "calendar",  name: "arrival_date",       label: "ArrivalDate",   dateFormat: "%Y-%m-%d %H:%i:%s", enableTime: "true", calendarPosition: "right", tooltip: "Arrival Date", required: "true", validate: "NotEmpty", hidden: "false"},
+        {type: "input",     name: "arrival_username",   label: "StaffID",       tooltip: "Username", required: "true", validate: "NotEmpty", hidden: "false"},
         { type: "block", id: "buttons", width: 300,
             list: [
-                {type: "button", value: "Save", name: "save"},
+                {type: "button", value: "Save", name: "Save"},
                 {type: "newcolumn"},
                 {type: "button", value: "Cancel", name: "cancel"}
             ]}
     ];
+    //clear the workspace
+    generatorsClearCanvas();
+
+    //attach form
     generatorsForm = generatorsLayout.cells("a").attachForm();
     generatorsForm.setFontSize("20px");
     generatorsForm.loadStruct(items,function() {
-        generatorsForm.setItemFocus("BatchNo");
-        generatorsForm.setItemValue("ArrivalDate",logic.getDateTime());
-        generatorsForm.setItemValue("Username", A.UserName);
-        combo = generatorsForm.getCombo("Supplier");
+        generatorsForm.setItemFocus("batch_number");
+        generatorsForm.setItemValue("arrival_date",logic.getDateTime());
+        generatorsForm.setItemValue("arrival_username", A.UserName);
+        combo = generatorsForm.getCombo("supplier_name");
     });
 
     if ( id >= 0){

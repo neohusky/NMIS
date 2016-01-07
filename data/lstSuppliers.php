@@ -1,5 +1,5 @@
 <?php
-    require_once("../js/dhtmlx/combo_connector.php");
+    require_once("../codebase/dhtmlx/combo_connector.php");
 	require_once('config.php');
 
 
@@ -7,5 +7,5 @@
     $data->enable_log("log.txt",true);
 
 
-    $data->render_sql("SELECT DISTINCT `suppliers`.`Name` FROM `suppliers` ","Name","Name");
+    $data->render_sql("SELECT DISTINCT `supplier_name` FROM `suppliers` ","supplier_name","supplier_name");
 ?>

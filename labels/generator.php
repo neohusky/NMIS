@@ -21,9 +21,9 @@ if (!$copies){
 require_once('../data/config.php');
 
 
-$sql = "Select id, BatchNo, Supplier, ArrivalDate, Username
+$sql = "Select generator_id,batch_number ,supplier_name ,arrival_date ,arrival_username
 		FROM nmis.generators
-		WHERE id = $id";
+		WHERE generator_id = $id";
 
 $result = mysql_query( $sql, $conn );
 
@@ -34,12 +34,12 @@ if (!$result) {
 }
 while ($row = mysql_fetch_assoc($result)) {
 
-    $BatchNo = $row['BatchNo'];
-    $Supplier = $row['Supplier'];
-    $date = date_create($row['ArrivalDate']);
+    $BatchNo = $row['batch_number'];
+    $Supplier = $row['supplier_name'];
+    $date = date_create($row['arrival_date']);
     $ArrivalDate =  date_format($date,"d/m/Y");
 
-    $Username = $row['Username'];
+    $Username = $row['arrival_username'];
     $Barcode = "G".$row['id'];
 
     //echo $row['id'] . " " . $BatchNo . " " . $Supplier . " " . $ArrivalDate ." " . $Username ."\n";
