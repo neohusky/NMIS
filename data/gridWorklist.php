@@ -6,7 +6,7 @@
  	$grid->enable_log("log.txt",true);
 
     $grid->render_complex_sql(
-    "SELECT `dicomworklist`.* FROM dicomworklist INNER JOIN DicomWorklistExclude ON `dicomworklist`.`RequestedProcedureDescription` = `DicomWorklistExclude`.`RequestedProcedureDescription`",
+    "SELECT `DicomWorklist`.* FROM DicomWorklist INNER JOIN DicomWorklistExclude ON `DicomWorklist`.`RequestedProcedureDescription` = `DicomWorklistExclude`.`RequestedProcedureDescription`",
     "StudyInstanceUID",
     "PatientName, PatientID, PatientDOB, PatientSex, RequestedProcedureDescription, CurrentPatientLocation, Modality");
 

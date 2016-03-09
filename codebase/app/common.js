@@ -10,13 +10,13 @@ var A = {
     cache: true,
     modules: {
         dhtmlx: ["dhtmlx"],
-        app: ["init", "generators","logic","settings"],
+        app: ["init", "generators","logic","settings","admin"],
         common: ["settings_forms"]
     },
     imagePath: "images/",
     HotlabConnectServer: "",
     HotlabConnectPort: "",
-    UserName: "theok",
+    UserName: "",
     TimeOut:"",
     BarcodeIncomming:"",
     BarcodeScanned:"",
