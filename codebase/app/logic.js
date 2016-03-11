@@ -70,13 +70,10 @@ var logic = {
 
     getUserDetails: function() {
 
-        dhx.ajax().get("data/userDetails.php?id=" + config.UserName, function (text, xml) {
+        dhx.ajax().get("data/userDetails.php?id=" + A.UserName, function (text, xml) {
             var UserDetails = dhx.DataDriver.json.toObject(text, xml);
-
-            config.StaffName = UserDetails.UserDetails["0"].Staffname;
-            config.StaffPosition = UserDetails.UserDetails["0"].Position;
-
-            //msgbox(Position);
+            A.StaffName = UserDetails.UserDetails["0"].Staffname;
+            A.StaffPosition = UserDetails.UserDetails["0"].Position;
 
         })
     },

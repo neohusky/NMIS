@@ -20,7 +20,7 @@ var A = {
     TimeOut:"",
     BarcodeIncomming:"",
     BarcodeScanned:"",
-    StaffName:"Theo Kitsos",
+    StaffName:"",
     StaffPosition:""
 };
 

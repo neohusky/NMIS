@@ -1,6 +1,7 @@
 var mainSidebar;
 var mainToolbar;
 var win;
+var LoginForm;
 function appInit() {
 
 	// init sidebar
@@ -39,10 +40,8 @@ function appInit() {
 	} else {
 		mainToolbar.setItemText("btnUser",window.dhx4.template("<span style='font-size: 14px;'>#text#</span>", {text: A.StaffName}));
 	}
+
 	loginWindow();
-
-
-
 
 
 	mainSidebar.attachEvent("onSelect", function(id){
@@ -60,6 +59,8 @@ function appUnload() {
 		mainSidebar = null;
 	}
 }
+
+
 
 function loginWindow(){
 	var myForm, formData;
@@ -83,9 +84,9 @@ function loginWindow(){
 		]}
 	];
 
-	myForm = new dhtmlXForm("dhxForm", formData);
+	LoginForm = new dhtmlXForm("dhxForm", formData);
 
-	myForm.attachEvent("onButtonClick", function(name) {
+	LoginForm.attachEvent("onButtonClick", function(name) {
 		// submit real form when user clicks Submit button on a dhtmlx form
 		if (name == "submit") {
 			document.getElementById("realForm").submit();
@@ -96,12 +97,16 @@ function loginWindow(){
 //for login form
 function submitCallback(status) {
 	if (status == 1) {
-		//A.UserName = myForm.getItemValue("Login");
-		console.log(myForm.getItemValue("Login"));
+		A.UserName = LoginForm.getItemValue("dhxform_demo_login");
+		logic.getUserDetails();
 		//document.location.href = "secret.html";
 		win.close();
+		//Update toolbar with Logged in user info
+		mainToolbar.setItemText("btnUser",window.dhx4.template("<span style='font-size: 14px;'>#text#</span>", {text: A.UserName}));
+
 	} else {
 		// reset form
+		A.UserName = "";
 		dhtmlx.alert("You do not have permission to access this application")
 		myForm.setFormData({dhxform_demo_login: "", dhxform_demo_pwd: ""});
 
