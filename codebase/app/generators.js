@@ -99,9 +99,10 @@ function generatorsDecommission() {
     var items = [
         {type: "settings", position: "label-left", labelWidth: 130, inputWidth: 260},
         {type: "container",     name: "gridActiveGenerators",       hidden: "false", inputWidth: 950,inputHeight:300,offsetTop: 40},
-        {type: "input",     name: "barcode",        label: "Barcode",      tooltip: "barcode", validate: "NotEmpty", hidden: "false",offsetTop: 40},
+        {type: "input",     name: "generator_id",       label: "id",            tooltip: "id",  required: "false", hidden: "true", offsetTop: 40},
         {type: "calendar",  name: "decommission_date",    label: "Decommission Date",   dateFormat: "%Y-%m-%d %H:%i:%s", enableTime: "true", calendarPosition: "right", tooltip: "Arrival Date", required: "true", validate: "NotEmpty", hidden: "false"},
         {type: "input",     name: "decommission_username",       label: "Username",       tooltip: "Username", required: "true", validate: "NotEmpty", hidden: "false"},
+        {type: "input",     name: "barcode",        label: "Barcode",      tooltip: "barcode", validate: "NotEmpty", hidden: "false",offsetTop: 40},
         { type: "block", id: "buttons", width: 300,
             list: [
                 {type: "button", value: "Decommission", name: "Decommission"},
