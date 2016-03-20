@@ -40,6 +40,7 @@ function appInit() {
 	});
 
 	mainSidebar.cells("home").setActive(true);
+	loadForm()
 
 }
 
@@ -49,6 +50,52 @@ function appUnload() {
 		mainSidebar = null;
 	}
 }
+function loginForm() {
+	var myWins = new dhtmlXWindows();
+	winLogin = myWins.createWindow("login", 300, 300, 400, 400);
+
+	winLogin.centerOnScreen();
+	winLogin.setModal(true);
+	winLogin.denyResize();
+	winLogin.denyMove();
+	//winLogin.button("close").hide();
+	//winLogin.button("minmax").hide();
+	////winLogin.button("park").hide();
+	winLogin.hideHeader();
+}
+
+var myForm, formData;
+
+function loadForm() {
+	formData = [
+		{type: "settings", position: "label-left", labelWidth: 75, inputWidth: 150},
+		{type: "block", blockOffset: 30, offsetTop: 15, width: "auto", list: [
+			{type: "label", label: "Please introduce yourself", labelWidth: "auto", offsetLeft: 35},
+			{type: "input", label: "Login", name: "dhxform_demo_login", value: "", offsetTop: 20},
+			{type: "password", label: "Password", name: "dhxform_demo_pwd", value: ""},
+			{type: "button", name: "submit", value: "Let me in", offsetTop: 20, offsetLeft: 72}
+		]}
+	];
+
+	myForm = new dhtmlXForm("dhxForm", formData);
+
+	myForm.attachEvent("onButtonClick", function(name) {
+		// submit real form when user clicks Submit button on a dhtmlx form
+		if (name == "submit") {
+			document.getElementById("realForm").submit();
+		}
+	});
+}
+
+function submitCallback(status) {
+	if (status == 1) {
+		document.location.href = "secret.html";
+	} else {
+		// reset form
+		myForm.setFormData({dhxform_demo_login: "", dhxform_demo_pwd: ""});
+	}
+}
+
 
 window.dhx4.attachEvent("init", appInit);
 window.dhx4.attachEvent("unload", appUnload);
