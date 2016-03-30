@@ -13,6 +13,7 @@ function appInit() {
 		template: "icons_text",
 		items: [
 			{id: "home", text: "Home", icon: "home.png", selected: false},
+			{id: "doses", text: "Doses", icon: "doses.png", selected: false},
 			{id: "patients", text: "Patients", icon: "patients.png", selected: false},
 			{id: "generators", text: "Generators", icon: "generators.png", selected: false},
 			{id: "eluates", text: "Eluates", icon: "eluates.png", selected: false},
@@ -41,7 +42,8 @@ function appInit() {
 		mainToolbar.setItemText("btnUser",window.dhx4.template("<span style='font-size: 14px;'>#text#</span>", {text: A.StaffName}));
 	}
 
-	loginWindow();
+	//Open Login window
+	//loginWindow();
 
 
 	mainSidebar.attachEvent("onSelect", function(id){

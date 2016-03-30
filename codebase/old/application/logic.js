@@ -1,35 +1,9 @@
 /**
  * Created by nucmed on 17/11/2015.
  */
-
 var logic = {
 
-    getDateTime : function() {
-        var now     = new Date();
-        var year    = now.getFullYear();
-        var month   = now.getMonth()+1;
-        var day     = now.getDate();
-        var hour    = now.getHours();
-        var minute  = now.getMinutes();
-        var second  = now.getSeconds();
-        if(month.toString().length == 1) {
-            var month = '0'+month;
-        }
-        if(day.toString().length == 1) {
-            var day = '0'+day;
-        }
-        if(hour.toString().length == 1) {
-            var hour = '0'+hour;
-        }
-        if(minute.toString().length == 1) {
-            var minute = '0'+minute;
-        }
-        if(second.toString().length == 1) {
-            var second = '0'+second;
-        }
-        var dateTime = year+'-'+month+'-'+day+' '+hour+':'+minute+':'+second;
-        return dateTime;
-    },
+
     getBarcode: function () {
         url = "http://" + config.HotlabConnectServer + ":" + config.HotlabConnectPort + "/getBarcode";
         //retrieve barcode data from hotlab connect if barcopde string is empty
@@ -70,10 +44,13 @@ var logic = {
 
     getUserDetails: function() {
 
-        dhx.ajax().get("data/userDetails.php?id=" + A.UserName, function (text, xml) {
+        dhx.ajax().get("data/userDetails.php?id=" + config.UserName, function (text, xml) {
             var UserDetails = dhx.DataDriver.json.toObject(text, xml);
-            A.StaffName = UserDetails.UserDetails["0"].Staffname;
-            A.StaffPosition = UserDetails.UserDetails["0"].Position;
+
+            config.StaffName = UserDetails.UserDetails["0"].Staffname;
+            config.StaffPosition = UserDetails.UserDetails["0"].Position;
+
+            //msgbox(Position);
 
         })
     },
@@ -111,22 +88,6 @@ var logic = {
         dhx.ajax().get(zplurl, function(text,xml){
         console.log(zplurl);
 
-        });
-    },
-    logger: function(action,description) {
-        var text = "Action:"+ action + ". <br />Description" +description;
-        var url = "data/updateLog.php?username="+A.UserName+"&action="+action+"&description="+description;
-        dhx.ajax().get(url, function(text,xml){
-
-            console.log(text);
-        });
-
-
-
-        dhtmlx.message({
-            text: text,
-            expire: 6000, //milliseconds. You can use negative value (-1) to make notice persistent.
-            type: "myNotice" // 'customCss' - css class
         });
     },
     barCodeReader: function(value){
@@ -176,10 +137,4 @@ var logic = {
         }
     },
 
-    DWLquery: function(){
-
-        dhx.ajax().get("data/RunDWL.php", function(text,xml){
-            statusbar.setText(text,xml);
-        });
-    }
 };
