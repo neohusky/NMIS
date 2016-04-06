@@ -29,7 +29,8 @@ function adminInit(cell) {
             autohide: false,          // boolean, true to enable autohide for navigation bar
             items: [
                 {id: "adminKits", text: "Kits", icon: "kits.png", selected: false},
-                {id: "adminStaff", text: "Staff", icon: "staff.png", selected: false}
+                {id: "adminStaff", text: "Staff", icon: "staff.png", selected: false},
+                {id: "adminSettings", text: "Settings", icon: "settings.png", selected: false}
 
             ]
         });

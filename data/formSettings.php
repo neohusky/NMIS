@@ -1,6 +1,6 @@
 <?php
 	require_once('config.php');
-	require_once('../js/dhtmlx/form_connector.php');
+	require_once('../codebase/dhtmlx/form_connector.php');
 
 //	sleep(1);
 

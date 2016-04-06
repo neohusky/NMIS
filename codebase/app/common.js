@@ -10,7 +10,7 @@ var A = {
     cache: true,
     modules: {
         dhtmlx: ["dhtmlx"],
-        app: ["init", "generators","logic","settings","admin","patients","adminKits"],
+        app: ["init", "home","generators","logic","settings","admin","patients","adminKits","adminSettings"],
         common: ["settings_forms"]
     },
     imagePath: "images/",
@@ -21,7 +21,8 @@ var A = {
     BarcodeIncomming:"",
     BarcodeScanned:"",
     StaffName:"Kitsos, Theo",
-    StaffPosition:"Deputy Chief Nuclear Medicine Scientist"
+    StaffPosition:"Deputy Chief Nuclear Medicine Scientist",
+    HomeScreenRefresh:120000
 };
 
 // app enter-point

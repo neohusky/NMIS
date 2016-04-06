@@ -181,5 +181,18 @@ var logic = {
         dhx.ajax().get("data/RunDWL.php", function(text,xml){
             statusbar.setText(text,xml);
         });
-    }
+    },
+    openHotlabConnectConfig: function(){
+        var dhxWins, w1,url;
+        dhxWins = new dhtmlXWindows();
+        url = "http://" + config.HotlabConnectServer +":"+ config.HotlabConnectPort;
+
+        w1 = dhxWins.createWindow("w1",20,50,1120,600);
+        w1.setText(url);
+        w1.button("minmax").hide();
+        w1.button("park").hide();
+        w1.button("close").enable();
+        w1.attachURL(url);
+    },
+
 };

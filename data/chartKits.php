@@ -1,6 +1,6 @@
 <?php
 	require_once('config.php');
-	require_once("../js/dhtmlx/chart_connector.php");
+	require_once("../codebase/dhtmlx/chart_connector.php");
 
 	$today = date('Y-m-d');
 

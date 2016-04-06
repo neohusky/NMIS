@@ -1,6 +1,5 @@
-<?php
-    require_once('config.php');
-	require_once('../js/dhtmlx/grid_connector.php');
+<?php require_once('config.php');
+	require_once('../codebase/dhtmlx/grid_connector.php');
 
 	$grid = new GridConnector($conn);
  	$grid->enable_log("log.txt",true);
