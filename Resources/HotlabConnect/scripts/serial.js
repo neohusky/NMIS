@@ -174,7 +174,10 @@ exports.getCalReading = function (callback) {
     callback(data);
 };
 
-
+exports.sendCommand = function (r) {
+    console.log(r);
+    myPort.write(r+"\n");
+};
 exports.calIsotope = function (r) {
     //var isotope = req.params.isotope;
 

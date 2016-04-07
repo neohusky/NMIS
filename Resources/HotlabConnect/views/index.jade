@@ -18,6 +18,12 @@ block pageTitle
                         | An example would be http://10.7.145.98:8080/zplprint/g1/urlencode(zplcode)/5...This would print 5 copies
                     hr
                     p
+                        b /zpltest
+                        p
+                        | Used to test printing a label on the zebra printer
+                        | Usage example: http://10.7.145.98:8080/zpltest
+                    hr
+                    p
                         b /settings
                         p
                         | Used to configure the settings of HotlabConnect.
@@ -48,3 +54,8 @@ block pageTitle
                         | Sets the Dose calibrator Isotope.
                         | Example....http://10.7.145.98:8080/control/Tc-99m
 
+                p
+                    b /sendcommand/:command
+                    p
+                    | Send a command to the Dose calibrator.
+                    | Example....http://10.7.145.98:8080/sendcommand/1

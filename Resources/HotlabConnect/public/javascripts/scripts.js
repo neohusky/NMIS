@@ -18,6 +18,20 @@ function onResetComm() {
 
     window.location.href = "/resetcomm";
 };
+function onPrintTest() {
+    urlName = "/zpltest";
+
+
+    var popup = window.open(urlName, "",'width=100,height=100');
+
+    setTimeout(function(){popup.close()},1000);
+
+    //window.location.href = "/zpltest";
+
+   // window.location.href = "/";
+
+
+};
 function onCalReading() {
 
     document.getElementById('myFrame').src = "/getCalReading";
